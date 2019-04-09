@@ -3,16 +3,19 @@
 /*
 Find unused css inside Angular components
 */
+const SELECTORS_TO_IGNORE = [':host', '::ng-deep'];
+
 const Purgecss = require('purgecss');
 const path = require('path');
 const fs = require('fs');
 const sass = require('node-sass');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
+const config = require('./.ngx-unused-css');
 
-const ignoreSelectors = [':host', '::ng-deep'];
+const ignoreSelectors = SELECTORS_TO_IGNORE.concat(config.ignore.filter(c => typeof(c) === 'string'))
 
-let projectPath = '';
+let projectPath = config.path;
 
 var combine = function(a) {
   var fn = function(n, src, got, all) {
@@ -59,7 +62,7 @@ function extractClassesFromNgClass(value) {
   return classes;
 }
 
-function parseNgClass(html) {
+function parseNgClass(html, cssPath) {
   const dom = new JSDOM(html);
 
   var all = dom.window.document.getElementsByTagName('*');
@@ -111,7 +114,7 @@ function findUnusedCss(content, cssPath) {
   }
 
   try {
-    const html = parseNgClass(content);
+    const html = parseNgClass(content, cssPath);
     var purgecss = new Purgecss({
       content: [
         {
@@ -125,10 +128,18 @@ function findUnusedCss(content, cssPath) {
     var purgecssResult = purgecss.purge();
     let result = purgecssResult[0].rejected;
 
+    const fileIgnore = config.ignore.filter(c => typeof(c) === "object").filter(c =>  "./" + projectPath + "/" + c.file === cssPath);
+
+    let ignore = ignoreSelectors;
+
+    if (fileIgnore.length > 0) {
+      const selectorsToIgnore = fileIgnore[0].selectors;
+      ignore = ignore.concat(selectorsToIgnore);
+    }
+
     // filter ignored selectors
     result = result.filter(c => {
-      const ignoredSelectorFound = ignoreSelectors.some(s => {
-        console.log(s, c, c.indexOf(s) > -1);
+      const ignoredSelectorFound = ignore.some(s => {
         return c.indexOf(s) > -1;
       });
       return !ignoredSelectorFound;

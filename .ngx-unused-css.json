@@ -1,0 +1,10 @@
+{
+    "path": "test", 
+    "ignore": [
+        "ng-star",
+        {
+            "file": "test.component.scss",
+            "selectors": [".test-2"]
+        }
+    ]
+}
