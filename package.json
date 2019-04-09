@@ -1,0 +1,26 @@
+{
+  "name": "ngx-unused-css",
+  "version": "1.0.0",
+  "description": "Detect unused CSS in angular components",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "angular",
+    "unused",
+    "css",
+    "detect",
+    "find"
+  ],
+  "author": "Ivan Blazevic",
+  "license": "ISC",
+  "dependencies": {
+    "jsdom": "^14.0.0",
+    "node-sass": "^4.11.0",
+    "purgecss": "^1.2.0"
+  },
+  "bin": {
+    "ngx-unused-css": "./index.js"
+  }
+}
