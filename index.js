@@ -73,13 +73,13 @@ function parseNgClass(html, cssPath) {
     attrs.forEach(a => {
       if (a.name === '[ngclass]') {
         const classes = extractClassesFromNgClass(a.value);
-
         e.removeAttribute('[ngclass]');
+        /*
         console.log(
           'ngClass removed from the element, classes found: ',
           classes
         );
-
+        */
         const classCombinations = combine(classes);
         classCombinations.forEach(c => {
           const el = createCopyOfElementWithClasses(dom, e, c);
@@ -192,8 +192,9 @@ list.forEach(element => {
 
 if (unusedClasses.length > 0) {
   let result = '';
-  unusedClasses.forEach(e => {
-    result += e[1] + '\n   ' + e[0].join() + '\n\n';
+  unusedClass
+  es.forEach(e => {
+    result += e[1] + '\n' + e[1].replace(".html", ".scss") + '\n   ' + e[0].join() + '\n\n';
   });
   throw new Error(
     'Unused CSS classes found in following angular components: \n\n' + result
