@@ -176,8 +176,8 @@ list.forEach(element => {
   const cssPath = htmlFile.replace('.html', '.scss'); // same path as html but css means it is component
 
   try {
+    fs.readFileSync(cssPath);
     try {
-      fs.readFileSync(cssPath);
       const classes = findUnusedCss(html, cssPath);
       if (classes.length > 0) {
         unusedClasses.push([classes, htmlFile]);
