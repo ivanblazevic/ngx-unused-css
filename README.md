@@ -49,18 +49,43 @@ This comes useful when class is applied based on the value from the backend, e.g
 
 `[ngClass]="model.status.toLowerCase()"` class is dervied from the backend so there is no possibility to do the analysis.
 
-**Special**: global as a string, or object as a file specific
+**Special**: global as a string, or Object as a file specific
 
-* String: `".dynamic-class"`
+### Object
 
-* File:
+#### file
+* Type: `String`
+* Default: `null`
+
+Path to css file
+
+#### selectors
+* Type: `Array<String>`
+* Default: `null`
+
+Array of selectors inside the file
+
+#### all
+* Type: `Boolean`
+* Default: `false`
+
+If set as true it will ignore selectors property (if defined) and will ignore whole file
+
+Example: *Ignore .dynamic-class in app.component.scss*:
 ```
 {
   file: "app.component.scss",
   selectors: [".dynamic-class"]
 }
 ```
-*Ignore .dynamic-class in app.component.scss*
+
+Example: *Ignore whole app.component.scss*:
+```
+{
+  file: "app.component.scss",
+  all: true
+}
+```
 
 ### Configuration example from lib:
 ```
