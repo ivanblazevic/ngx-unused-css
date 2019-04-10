@@ -2,7 +2,7 @@
  * These tests are using .ngx-unused-css.json as a configuration and templatest from test directory
  */
 const ngxUnusedCss = function () {
-    require("./index.js");
+    require(__dirname + "/index.js");
 }
 
 describe("ngx unused css", () => {
