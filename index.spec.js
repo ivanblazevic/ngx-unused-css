@@ -15,8 +15,8 @@ describe("ngx unused css", () => {
         }
 
         // expect html file path, css file path & unused classes
-        expect(result).toContain('\\test\\test.component.html');
-        expect(result).toContain('\\test\\test.component.scss');
+        expect(result).toContain('test.component.html');
+        expect(result).toContain('test.component.scss');
         expect(result).toContain('.test-2');
     })
 });
