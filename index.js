@@ -11,7 +11,7 @@ const fs = require('fs');
 const sass = require('node-sass');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
-const config = require(__dirname + '/.ngx-unused-css');
+const config = require(__dirname + '/.ngx-unused-css.json');
 
 const ignoreSelectors = SELECTORS_TO_IGNORE.concat(config.ignore.filter(c => typeof(c) === 'string'))
 
