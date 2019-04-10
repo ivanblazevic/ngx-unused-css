@@ -22,5 +22,11 @@
   },
   "bin": {
     "ngx-unused-css": "./index.js"
+  },
+  "bugs": "https://github.com/ivanblazevic/ngx-unused-css/issues",
+  "homepage": "https://github.com/ivanblazevic/ngx-unused-css",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ivanblazevic/ngx-unused-css"
   }
 }
