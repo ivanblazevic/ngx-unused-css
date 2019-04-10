@@ -122,7 +122,7 @@ To compare against CSS it will recompile html with all possible cases:
 </div>
 ```
 
-**NOTE:** This library will not detect nested ngClasses e.g.
+**NOTE:** This library will not detect nested ngClasses
 
 
 ## Special cases
