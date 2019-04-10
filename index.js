@@ -17,6 +17,11 @@ const ignoreSelectors = SELECTORS_TO_IGNORE.concat(config.ignore.filter(c => typ
 
 let projectPath = config.path;
 
+/**
+ * Returns array of all possible combinations of array values
+ * e.g. if param is ["a", "b"] it will return [["a"], ["b"], ["a", "b"]]
+ * @param { Array<string> } a - Array of strings
+ */
 var combine = function(a) {
   var fn = function(n, src, got, all) {
     if (n == 0) {
