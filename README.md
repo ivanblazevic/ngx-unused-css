@@ -1,4 +1,10 @@
 [![Build Status](https://travis-ci.org/ivanblazevic/ngx-unused-css.svg?branch=master)](https://travis-ci.org/ivanblazevic/ngx-unused-css)
+[![Dependency Status](https://david-dm.org/ivanblazevic/ngx-unused-css.svg?theme=shields.io)](https://david-dm.org/ivanblazevic/ngx-unused-css)
+[![devDependency Status](https://david-dm.org/ivanblazevic/ngx-unused-css/dev-status.svg?theme=shields.io)](https://david-dm.org/ivanblazevic/ngx-unused-css#info=devDependencies)
+[![Inline docs](http://inch-ci.org/github/ivanblazevic/ngx-unused-css.svg?branch=master)](http://inch-ci.org/github/ivanblazevic/ngx-unused-css)
+
+[![npm](https://nodei.co/npm/ngx-unused-css.png?downloads=true&downloadRank=true&stars=true)](https://npmjs.org/package/ngx-unused-css)
+
 
 # Angular unused css detection
 
@@ -97,6 +103,3 @@ To compare against CSS it will recompile html with all possible cases:
 ## Special cases
 
 Template files that are not matching their styling counter part will be ignored
-
-
-[![npm](https://nodei.co/npm/ngx-unused-css.png?downloads=true&downloadRank=true&stars=true)](https://npmjs.org/package/ngx-unused-css)
