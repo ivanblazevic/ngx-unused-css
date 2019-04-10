@@ -43,6 +43,12 @@ var combine = function(a) {
   return all;
 };
 
+/**
+ * Create copy of reference element and add classes passed as a params
+ * @param { JSDOM } dom 
+ * @param { element } e 
+ * @param { Array<string> } classes 
+ */
 function createCopyOfElementWithClasses(dom, e, classes) {
   const el = dom.window.document.createElement(e.tagName);
   el.classList = e.classList;
@@ -97,6 +103,12 @@ function parseNgClass(html, cssPath) {
   return dom.serialize();
 }
 
+/**
+ * Resolve tilda relative importes from node_modules
+ * @param {*} url 
+ * @param {*} prev 
+ * @param {*} done 
+ */
 function importer(url, prev, done) {
   if (url[0] === '~') {
     url = path.resolve('node_modules', url.substr(1));

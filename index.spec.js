@@ -1,11 +1,24 @@
+/**
+ * These tests are using .ngx-unused-css.json as a configuration and templatest from test directory
+ */
+const ngxUnusedCss = function () {
+    require("./index.js");
+}
+
 describe("ngx unused css", () => {
     it("should detect unused class", () => {
-        const template = `
-            <div class="class1"></div>
-            <div class="class2"></div>
-        `;
-        
+        var result = "";
+        try {
+            ngxUnusedCss();
+        } catch (error) {
+            result = error.message.trimAll()
+        }
 
-        expect(1).toBe(1);
+        // expect html file path, css file path & unused classes
+        expect(result).toContain('./test\\test.component.html');
+        expect(result).toContain('./test\\test.component.scss');
+        expect(result).toContain('.test-2');
     })
 });
+
+String.prototype.trimAll = function () { return this.replace(/\s/g, ''); };
