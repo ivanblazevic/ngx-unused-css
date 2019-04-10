@@ -1,5 +1,3 @@
-# ngx-unused-css
-
 # Angular unused css detection
 
 How does it works:
@@ -35,18 +33,26 @@ Path to a project, for Angular it is usually `src/app`
 
 ### ignore
 
-* Type: `String | Object`[]
+* Type: `Array<String | Object>`
 * Default: `null`
+
+Selectors to ignore, they can be defined globally (as an string) or specific per file (as an object).
+This comes useful when class is applied based on the value from the backend, e.g.
+
+`[ngClass]="model.status.toLowerCase()"` class is dervied from the backend so there is no possibility to do the analysis.
 
 **Special**: global as a string, or object as a file specific
 
-* File: 
+* String: `".dynamic-class"`
+
+* File:
 ```
 {
-  file: "app.component.css",
+  file: "app.component.scss",
   selectors: [".dynamic-class"]
 }
 ```
+*Ignore .dynamic-class in app.component.scss*
 
 ### Configuration example from lib:
 ```
@@ -66,12 +72,29 @@ Path to a project, for Angular it is usually `src/app`
 
 If ngClass is found on the element, same element will be duplicated with all possible combination of the classes on the same level and template will be then compared with css definition to match if all possible combinations are used
 
+Example:
+```
+<div class="test">
+     <div class="test" [ngClass]="{ class1: var1, class2: var2 }"></div>
+</div>
+```
+
+To compare against CSS it will recompile html with all possible cases:
+```
+<div class="test">
+     <div class="test" [ngClass]="{ class1: var1, class2: var2 }"></div>
+     <div class="test class1"></div>
+     <div class="test class2"></div>
+     <div class="test class1 class2"></div>
+</div>
+```
+
+**NOTE:** This library will not detect nested ngClasses e.g.
+
+
 ## Special cases
 
 Template files that are not matching their styling counter part will be ignored
 
 
-
-
-
-
+[![npm](https://nodei.co/npm/ngx-unused-css.png?downloads=true&downloadRank=true&stars=true)](https://npmjs.org/package/ngx-unused-css)
