@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ivanblazevic/ngx-unused-css.svg?branch=master)](https://travis-ci.org/ivanblazevic/ngx-unused-css)
+
 # Angular unused css detection
 
 How does it works:
