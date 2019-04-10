@@ -192,7 +192,7 @@ list.forEach(element => {
 
 if (unusedClasses.length > 0) {
   let result = '';
-  es.forEach(e => {
+  unusedClasses.forEach(e => {
     result += e[1] + '\n' + e[1].replace(".html", ".scss") + '\n   ' + e[0].join() + '\n\n';
   });
   throw new Error(
