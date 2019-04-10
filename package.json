@@ -1,6 +1,6 @@
 {
   "name": "ngx-unused-css",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Detect unused CSS in angular components",
   "main": "index.js",
   "scripts": {
