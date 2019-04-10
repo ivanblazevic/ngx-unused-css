@@ -192,7 +192,6 @@ list.forEach(element => {
 
 if (unusedClasses.length > 0) {
   let result = '';
-  unusedClass
   es.forEach(e => {
     result += e[1] + '\n' + e[1].replace(".html", ".scss") + '\n   ' + e[0].join() + '\n\n';
   });
