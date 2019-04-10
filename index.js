@@ -13,6 +13,10 @@ const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 const config = require(__dirname + '/.ngx-unused-css.json');
 
+if (!config) {
+  throw new Error("Configuration file .ngx-unused-css.json is missing.");
+}
+
 const ignoreSelectors = SELECTORS_TO_IGNORE.concat(config.ignore.filter(c => typeof(c) === 'string'))
 
 let projectPath = config.path;
