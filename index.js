@@ -188,11 +188,13 @@ try {
   throw new Error(error);
 }
 
+projectPath = path.resolve(projectPath);
+
 const list = findHtml(projectPath, 'html');
 let unusedClasses = [];
 
 list.forEach(element => {
-  const htmlFile = './' + element;
+  const htmlFile = element;
   const html = fs.readFileSync(htmlFile, 'utf8');
   const cssPath = htmlFile.replace('.html', '.scss'); // same path as html but css means it is component
 
