@@ -12,7 +12,7 @@ const sass = require("node-sass");
 const jsdom = require("jsdom");
 const utils = require("./utils/utils.js");
 const { JSDOM } = jsdom;
-let config = require(__dirname + "/.ngx-unused-css");
+let config = require(path.resolve('.ngx-unused-css.json'));
 
 if (!config) {
   throw new Error("Configuration file .ngx-unused-css.json is missing.");
