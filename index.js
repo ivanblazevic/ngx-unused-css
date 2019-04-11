@@ -10,6 +10,7 @@ const path = require('path');
 const fs = require('fs');
 const sass = require('node-sass');
 const jsdom = require('jsdom');
+const utils = require('./utils/utils.js');
 const { JSDOM } = jsdom;
 let config = require(__dirname + '/.ngx-unused-css');
 
@@ -33,31 +34,6 @@ try {
 let projectPath = config.path;
 
 const ignoreSelectors = SELECTORS_TO_IGNORE.concat(config.ignore.filter(c => typeof(c) === 'string'));
-/**
- * Returns array of all possible combinations of array values
- * e.g. if param is ["a", "b"] it will return [["a"], ["b"], ["a", "b"]]
- * @param { Array<string> } a - Array of strings
- */
-var combine = function(a) {
-  var fn = function(n, src, got, all) {
-    if (n == 0) {
-      if (got.length > 0) {
-        all[all.length] = got;
-      }
-      return;
-    }
-    for (var j = 0; j < src.length; j++) {
-      fn(n - 1, src.slice(j + 1), got.concat([src[j]]), all);
-    }
-    return;
-  };
-  var all = [];
-  for (var i = 0; i < a.length; i++) {
-    fn(i, a, [], all);
-  }
-  all.push(a);
-  return all;
-};
 
 /**
  * Create copy of reference element and add classes passed as a params
@@ -118,7 +94,7 @@ function parseNgClass(html, cssPath) {
           classes
         );
         */
-        const classCombinations = combine(classes);
+        const classCombinations = utils.combine(classes);
         classCombinations.forEach(c => {
           const el = createCopyOfElementWithClasses(dom, e, c);
           e.parentNode.insertBefore(el, e.nextSibling);
@@ -215,7 +191,7 @@ function findUnusedCss(content, cssPath) {
   }
 }
 
-const list = findHtml(projectPath, 'html');
+const list = utils.findHtml(projectPath, 'html');
 let unusedClasses = [];
 
 list.forEach(element => {
@@ -246,22 +222,4 @@ if (unusedClasses.length > 0) {
   throw new Error(
     'Unused CSS classes found in following angular components: \n\n' + result
   );
-}
-
-//source: https://gist.github.com/victorsollozzo/4134793
-function findHtml(base, ext, files, result) {
-  files = files || fs.readdirSync(base);
-  result = result || [];
-
-  files.forEach(function(file) {
-    let newbase = path.join(base, file);
-    if (fs.statSync(newbase).isDirectory()) {
-      result = findHtml(newbase, ext, fs.readdirSync(newbase), result);
-    } else {
-      if (file.substr(-1 * (ext.length + 1)) == '.' + ext) {
-        result.push(newbase);
-      }
-    }
-  });
-  return result;
 }
