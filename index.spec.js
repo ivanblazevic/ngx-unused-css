@@ -2,11 +2,18 @@
  * These tests are using .ngx-unused-css.json as a configuration and templatest from test directory
  */
 const { execSync } = require('child_process');
+const childProcess = require('child_process');
 const ngxUnusedCss = function () {
     require(__dirname + "/index.js");
 }
 
 describe("ngx unused css", () => {
+    it("should throw error if path not found in config", () => {
+        var spawn = childProcess.spawnSync("./index.js" , ["--config=ngx-unused-css-no-path"]);
+        var errorText = spawn.stderr.toString();
+        expect(errorText).toContain("Project path not defined");
+    })
+
     it("should detect unused class", () => {
         let result = "";
         try {

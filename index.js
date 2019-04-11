@@ -3,16 +3,16 @@
 /*
 Find unused css inside Angular components
 */
-const SELECTORS_TO_IGNORE = [':host', '::ng-deep'];
+const SELECTORS_TO_IGNORE = [":host", "::ng-deep"];
 
-const Purgecss = require('purgecss');
-const path = require('path');
-const fs = require('fs');
-const sass = require('node-sass');
-const jsdom = require('jsdom');
-const utils = require('./utils/utils.js');
+const Purgecss = require("purgecss");
+const path = require("path");
+const fs = require("fs");
+const sass = require("node-sass");
+const jsdom = require("jsdom");
+const utils = require("./utils/utils.js");
 const { JSDOM } = jsdom;
-let config = require(__dirname + '/.ngx-unused-css');
+let config = require(__dirname + "/.ngx-unused-css");
 
 if (!config) {
   throw new Error("Configuration file .ngx-unused-css.json is missing.");
@@ -21,9 +21,9 @@ if (!config) {
 try {
   process.argv.forEach(function(val, index) {
     if (index > 1) {
-      let a = val.split('=');
-      if (a[0] === '--config') {
-        config = require(__dirname + '/.' + a[1]);
+      let a = val.split("=");
+      if (a[0] === "--config") {
+        config = require(__dirname + "/." + a[1]);
       }
     }
   });
@@ -31,15 +31,21 @@ try {
   throw new Error(error);
 }
 
+if (!config.path) {
+  throw new Error("Project path not defined");
+}
+
 let projectPath = config.path;
 
-const ignoreSelectors = SELECTORS_TO_IGNORE.concat(config.ignore.filter(c => typeof(c) === 'string'));
+const ignoreSelectors = SELECTORS_TO_IGNORE.concat(
+  config.ignore.filter(c => typeof c === "string")
+);
 
 /**
  * Create copy of reference element and add classes passed as a params
- * @param { JSDOM } dom 
- * @param { element } e 
- * @param { Array<string> } classes 
+ * @param { JSDOM } dom
+ * @param { element } e
+ * @param { Array<string> } classes
  */
 function createCopyOfElementWithClasses(dom, e, classes) {
   const el = dom.window.document.createElement(e.tagName);
@@ -50,7 +56,7 @@ function createCopyOfElementWithClasses(dom, e, classes) {
 
 /**
  * Extract ngClass configuration and return array of all classes found
- * @param {string} value 
+ * @param {string} value
  */
 function extractClassesFromNgClass(value) {
   var found = [],
@@ -58,12 +64,12 @@ function extractClassesFromNgClass(value) {
     curMatch;
 
   while ((curMatch = rxp.exec(value))) {
-    found.push(curMatch[1].replace(/\n/g, '').replace(/ /g, ''));
+    found.push(curMatch[1].replace(/\n/g, "").replace(/ /g, ""));
   }
 
   let classes = [];
   if (found.length > 0) {
-    classes = found[0].split(',').map(e => e.split(':')[0]);
+    classes = found[0].split(",").map(e => e.split(":")[0]);
   }
 
   return classes;
@@ -73,21 +79,21 @@ function extractClassesFromNgClass(value) {
  * Parse html template and find all elements which contains ngClass attribute, if found
  * make copy of elements on the same level with all possible combinations of classes found
  * in ngClass configuration
- * @param {string} html 
- * @param {string} cssPath 
+ * @param {string} html
+ * @param {string} cssPath
  */
 function parseNgClass(html, cssPath) {
   const dom = new JSDOM(html);
 
-  var all = dom.window.document.getElementsByTagName('*');
+  var all = dom.window.document.getElementsByTagName("*");
 
   var inputList = Array.prototype.slice.call(all);
   inputList.forEach(e => {
     var attrs = Array.prototype.slice.call(e.attributes);
     attrs.forEach(a => {
-      if (a.name === '[ngclass]') {
+      if (a.name === "[ngclass]") {
         const classes = extractClassesFromNgClass(a.value);
-        e.removeAttribute('[ngclass]');
+        e.removeAttribute("[ngclass]");
         /*
         console.log(
           'ngClass removed from the element, classes found: ',
@@ -108,13 +114,13 @@ function parseNgClass(html, cssPath) {
 
 /**
  * Resolve tilda relative importes from node_modules
- * @param {*} url 
- * @param {*} prev 
- * @param {*} done 
+ * @param {*} url
+ * @param {*} prev
+ * @param {*} done
  */
 function importer(url, prev, done) {
-  if (url[0] === '~') {
-    url = path.resolve('node_modules', url.substr(1));
+  if (url[0] === "~") {
+    url = path.resolve("node_modules", url.substr(1));
   }
 
   return { file: url };
@@ -122,7 +128,7 @@ function importer(url, prev, done) {
 
 /**
  * Compile SCSS
- * @param {string} cssPath 
+ * @param {string} cssPath
  */
 function compileSCSS(cssPath) {
   var result = sass.renderSync({
@@ -134,11 +140,11 @@ function compileSCSS(cssPath) {
 
 /**
  * Find unused css classes per file and returns array of them
- * @param {string} content 
- * @param {string} cssPath 
+ * @param {string} content
+ * @param {string} cssPath
  */
 function findUnusedCss(content, cssPath) {
-  let css = '';
+  let css = "";
   try {
     if (!cssPath) return;
     css = compileSCSS(cssPath);
@@ -152,7 +158,7 @@ function findUnusedCss(content, cssPath) {
       content: [
         {
           raw: html,
-          extension: 'html'
+          extension: "html"
         }
       ],
       css: [{ raw: css }],
@@ -161,9 +167,11 @@ function findUnusedCss(content, cssPath) {
     var purgecssResult = purgecss.purge();
     let result = purgecssResult[0].rejected;
 
-    const fileIgnore = config.ignore.filter(c => typeof(c) === "object").filter(c => {
-      return projectPath + "/" + c.file === cssPath;
-    });
+    const fileIgnore = config.ignore
+      .filter(c => typeof c === "object")
+      .filter(c => {
+        return projectPath + "/" + c.file === cssPath;
+      });
 
     let ignore = ignoreSelectors;
 
@@ -191,13 +199,13 @@ function findUnusedCss(content, cssPath) {
   }
 }
 
-const list = utils.findHtml(projectPath, 'html');
+const list = utils.findHtml(projectPath, "html");
 let unusedClasses = [];
 
 list.forEach(element => {
   const htmlFile = element;
-  const html = fs.readFileSync(htmlFile, 'utf8');
-  const cssPath = htmlFile.replace('.html', '.scss'); // same path as html but css means it is component
+  const html = fs.readFileSync(htmlFile, "utf8");
+  const cssPath = htmlFile.replace(".html", ".scss"); // same path as html but css means it is component
 
   try {
     fs.readFileSync(cssPath);
@@ -209,17 +217,23 @@ list.forEach(element => {
     } catch (error) {}
   } catch (error) {
     console.log(
-      'Styling file for component ' + htmlFile + ' not found, skipping...'
+      "Styling file for component " + htmlFile + " not found, skipping..."
     );
   }
 });
 
 if (unusedClasses.length > 0) {
-  let result = '';
+  let result = "";
   unusedClasses.forEach(e => {
-    result += e[1] + '\n' + e[1].replace(".html", ".scss") + '\n   ' + e[0].join() + '\n\n';
+    result +=
+      e[1] +
+      "\n" +
+      e[1].replace(".html", ".scss") +
+      "\n   " +
+      e[0].join() +
+      "\n\n";
   });
   throw new Error(
-    'Unused CSS classes found in following angular components: \n\n' + result
+    "Unused CSS classes found in following angular components: \n\n" + result
   );
 }
