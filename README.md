@@ -30,7 +30,7 @@ How does it works:
 
 Run in CLI: `ngx-unused-css`
 
-Override project path from configuration with CLI param: `ngx-unused-css --projectPath=new/path`
+Override config path with CLI param: `ngx-unused-css --config=otherConfig`
 
 ## Options
 
@@ -59,7 +59,7 @@ This comes useful when class is applied based on the value from the backend, e.g
 * Type: `String`
 * Default: `null`
 
-Path to css file
+Path to css file, relative to projectPath
 
 #### selectors
 * Type: `Array<String>`

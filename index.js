@@ -11,16 +11,28 @@ const fs = require('fs');
 const sass = require('node-sass');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
-const config = require(__dirname + '/.ngx-unused-css.json');
+let config = require(__dirname + '/.ngx-unused-css');
 
 if (!config) {
   throw new Error("Configuration file .ngx-unused-css.json is missing.");
 }
 
-const ignoreSelectors = SELECTORS_TO_IGNORE.concat(config.ignore.filter(c => typeof(c) === 'string'))
+try {
+  process.argv.forEach(function(val, index) {
+    if (index > 1) {
+      let a = val.split('=');
+      if (a[0] === '--config') {
+        config = require(__dirname + '/.' + a[1]);
+      }
+    }
+  });
+} catch (error) {
+  throw new Error(error);
+}
 
 let projectPath = config.path;
 
+const ignoreSelectors = SELECTORS_TO_IGNORE.concat(config.ignore.filter(c => typeof(c) === 'string'));
 /**
  * Returns array of all possible combinations of array values
  * e.g. if param is ["a", "b"] it will return [["a"], ["b"], ["a", "b"]]
@@ -174,7 +186,7 @@ function findUnusedCss(content, cssPath) {
     let result = purgecssResult[0].rejected;
 
     const fileIgnore = config.ignore.filter(c => typeof(c) === "object").filter(c => {
-      return path.resolve(c.file) === cssPath;
+      return projectPath + "/" + c.file === cssPath;
     });
 
     let ignore = ignoreSelectors;
@@ -202,24 +214,6 @@ function findUnusedCss(content, cssPath) {
     console.error(error);
   }
 }
-
-try {
-  process.argv.forEach(function(val, index) {
-    if (index > 1) {
-      let a = val.split('=');
-      if (a[0] === '--projectPath') {
-        projectPath = a[1];
-      }
-    }
-  });
-  if (!projectPath) {
-    throw new Error('projectPath is missing');
-  }
-} catch (error) {
-  throw new Error(error);
-}
-
-projectPath = path.resolve(projectPath);
 
 const list = findHtml(projectPath, 'html');
 let unusedClasses = [];

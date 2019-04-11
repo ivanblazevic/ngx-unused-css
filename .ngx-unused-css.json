@@ -1,14 +1,6 @@
 {
     "path": "test", 
     "ignore": [
-        "ng-star",
-        {
-            "file": "test.component.scss",
-            "selectors": [".test-2"]
-        },
-        {
-            "file": "test/to-ignore/to-ignore.scss",
-            "all": true
-        }
+        "ng-star"
     ]
 }

@@ -1,0 +1,14 @@
+{
+    "path": "test/to-ignore", 
+    "ignore": [
+        "ng-star",
+        {
+            "file": "to-ignore.scss",
+            "all": true
+        },
+        {
+            "file": "subdirectory-to-ignore/subdirectory-to-ignore.scss",
+            "all": true
+        }
+    ]
+}

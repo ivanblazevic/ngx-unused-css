@@ -21,8 +21,8 @@ describe("ngx unused css", () => {
         expect(result).toContain('.test-2');
     })
 
-    it("should ignore whole to-ignore.html and test projectPath override", () => {
-        const result = execSync('./index.js --projectPath=test/to-ignore', {stdio: 'inherit'});
+    it("should ignore whole to-ignore.html and test configuration override", () => {
+        const result = execSync('./index.js --config=ngx-unused-css-ignore-test', {stdio: 'inherit'});
         expect(result).toBeNull();
     })
 
