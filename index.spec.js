@@ -1,17 +1,18 @@
 /**
  * These tests are using .ngx-unused-css.json as a configuration and templatest from test directory
  */
+const { execSync } = require('child_process');
 const ngxUnusedCss = function () {
     require(__dirname + "/index.js");
 }
 
 describe("ngx unused css", () => {
     it("should detect unused class", () => {
-        var result = "";
+        let result = "";
         try {
-            ngxUnusedCss();
+            result = ngxUnusedCss();  //execSync('./index.js --projectPath=test', {stdio: 'inherit'});    
         } catch (error) {
-            result = error.message.trimAll()
+            result = error.message.trimAll();    
         }
 
         // expect html file path, css file path & unused classes
@@ -19,6 +20,12 @@ describe("ngx unused css", () => {
         expect(result).toContain('test.component.scss');
         expect(result).toContain('.test-2');
     })
+
+    it("should ignore whole to-ignore.html and test projectPath override", () => {
+        const result = execSync('./index.js --projectPath=test/to-ignore', {stdio: 'inherit'});
+        expect(result).toBeNull();
+    })
+
 });
 
 String.prototype.trimAll = function () { return this.replace(/\s/g, ''); };

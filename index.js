@@ -60,6 +60,10 @@ function createCopyOfElementWithClasses(dom, e, classes) {
   return el;
 }
 
+/**
+ * Extract ngClass configuration and return array of all classes found
+ * @param {string} value 
+ */
 function extractClassesFromNgClass(value) {
   var found = [],
     rxp = /{([^}]+)}/g,
@@ -77,6 +81,13 @@ function extractClassesFromNgClass(value) {
   return classes;
 }
 
+/**
+ * Parse html template and find all elements which contains ngClass attribute, if found
+ * make copy of elements on the same level with all possible combinations of classes found
+ * in ngClass configuration
+ * @param {string} html 
+ * @param {string} cssPath 
+ */
 function parseNgClass(html, cssPath) {
   const dom = new JSDOM(html);
 
@@ -121,15 +132,28 @@ function importer(url, prev, done) {
   return { file: url };
 }
 
+/**
+ * Compile SCSS
+ * @param {string} cssPath 
+ */
+function compileSCSS(cssPath) {
+  var result = sass.renderSync({
+    file: cssPath,
+    importer: importer
+  });
+  return result.css.toString();
+}
+
+/**
+ * Find unused css classes per file and returns array of them
+ * @param {string} content 
+ * @param {string} cssPath 
+ */
 function findUnusedCss(content, cssPath) {
   let css = '';
   try {
     if (!cssPath) return;
-    var result = sass.renderSync({
-      file: cssPath,
-      importer: importer
-    });
-    css = result.css.toString();
+    css = compileSCSS(cssPath);
   } catch (error) {
     console.error(error);
   }
@@ -149,13 +173,20 @@ function findUnusedCss(content, cssPath) {
     var purgecssResult = purgecss.purge();
     let result = purgecssResult[0].rejected;
 
-    const fileIgnore = config.ignore.filter(c => typeof(c) === "object").filter(c =>  "./" + projectPath + "/" + c.file === cssPath);
+    const fileIgnore = config.ignore.filter(c => typeof(c) === "object").filter(c => {
+      return path.resolve(c.file) === cssPath;
+    });
 
     let ignore = ignoreSelectors;
 
     if (fileIgnore.length > 0) {
       const selectorsToIgnore = fileIgnore[0].selectors;
       ignore = ignore.concat(selectorsToIgnore);
+
+      // ignore all unused classes from file
+      if (fileIgnore[0].all) {
+        return [];
+      }
     }
 
     // filter ignored selectors

@@ -5,6 +5,10 @@
         {
             "file": "test.component.scss",
             "selectors": [".test-2"]
+        },
+        {
+            "file": "test/to-ignore/to-ignore.scss",
+            "all": true
         }
     ]
 }
