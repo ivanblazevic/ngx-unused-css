@@ -30,6 +30,8 @@ How does it works:
 
 Run in CLI: `ngx-unused-css`
 
+Override project path from configuration with CLI param: `ngx-unused-css --projectPath=new/path`
+
 ## Options
 
 ### path
