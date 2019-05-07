@@ -5,6 +5,8 @@ Find unused css inside Angular components
 */
 const SELECTORS_TO_IGNORE = [":host", "::ng-deep"];
 
+const {table} = require('table');
+const chalk = require('chalk');
 const Purgecss = require("purgecss");
 const path = require("path");
 const fs = require("fs");
@@ -223,17 +225,25 @@ list.forEach(element => {
 });
 
 if (unusedClasses.length > 0) {
-  let result = "";
+
+  console.error(chalk.blue.bold("Unused CSS classes were found for the following files"));
+
   unusedClasses.forEach(e => {
-    result +=
-      e[1] +
-      "\n" +
-      e[1].replace(".html", ".scss") +
-      "\n   " +
-      e[0].join() +
-      "\n\n";
+
+    const htmlPath = e[1];
+    const cssPath = e[1].replace(".html", ".scss");
+
+    console.log(chalk.red(htmlPath));
+    console.log(chalk.red.bold(cssPath));
+
+    const cssClasses = e[0].join("\n");
+    output = table([[chalk.green(cssClasses)]]);
+ 
+    console.log(output);
   });
+
   throw new Error(
-    "Unused CSS classes found in following angular components: \n\n" + result
+    "Unused CSS classes found"
   );
+
 }
