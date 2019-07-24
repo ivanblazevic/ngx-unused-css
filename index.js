@@ -135,7 +135,8 @@ function importer(url, prev, done) {
 function compileSCSS(cssPath) {
   var result = sass.renderSync({
     file: cssPath,
-    importer: importer
+    importer: [importer, config.importer],
+    includePaths: config.includePaths
   });
   return result.css.toString();
 }
