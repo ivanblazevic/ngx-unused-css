@@ -19,7 +19,7 @@ describe("ngx unused css", () => {
         try {
             result = ngxUnusedCss();  //execSync('./index.js --projectPath=test', {stdio: 'inherit'});    
         } catch (error) {
-            result = error.message.trimAll();    
+            result = error.message.trim();    
         }
 
         // expect html file path, css file path & unused classes
