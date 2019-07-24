@@ -228,6 +228,8 @@ list.forEach(element => {
 if (unusedClasses.length > 0) {
 
   console.error(chalk.blue.bold("Unused CSS classes were found for the following files"));
+  
+  var result = '';
 
   unusedClasses.forEach(e => {
 
@@ -235,16 +237,20 @@ if (unusedClasses.length > 0) {
     const cssPath = e[1].replace(".html", ".scss");
 
     console.log(chalk.red(htmlPath));
+    result += htmlPath + "\n";
     console.log(chalk.red.bold(cssPath));
+    result += cssPath + "\n";
 
     const cssClasses = e[0].join("\n");
+    result += cssClasses + "\n";
     output = table([[chalk.green(cssClasses)]]);
  
     console.log(output);
   });
 
   throw new Error(
-    "Unused CSS classes found"
+    "Unused CSS classes found:\n"
+    + result
   );
 
 }
