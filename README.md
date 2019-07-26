@@ -101,7 +101,7 @@ Example: _Ignore whole app.component.scss_:
 }
 ```
 
-### Configuration example from lib:
+Example: _Ignore ng-star globally and .test-2 inside test.component.scss file_:
 
 ```
 {
