@@ -5,13 +5,12 @@
 
 [![npm](https://nodei.co/npm/ngx-unused-css.png?downloads=true&downloadRank=true&stars=true)](https://npmjs.org/package/ngx-unused-css)
 
-
 # Angular unused css detection
 
 How does it works:
 
 - it finds all `.html` files inside the project and then pairs it with their styling files;
-     e.g. app.component.html > app.component.scss
+  e.g. app.component.html > app.component.scss
 - if pair is matched then it will compare unused css using PurgeCSS library
 - SCSS will be automatically compiled before the matching phase
 - some system selectors like `:host` or `::ng-deep` will be ignored
@@ -36,15 +35,23 @@ Override config path with CLI param: `ngx-unused-css --config=otherConfig`
 
 ### path
 
-* Type: `String`
-* Default: `null`
+- Type: `String`
+- Default: `null`
 
 Path to a project, for Angular it is usually `src/app`
 
+### importer
+
+Custom importer handler, more details here: https://github.com/sass/node-sass#importer--v200---experimental
+
+### includePaths
+
+Refer to original documentation: https://github.com/sass/node-sass#includepaths
+
 ### ignore
 
-* Type: `Array<String | Object>`
-* Default: `null`
+- Type: `Array<String | Object>`
+- Default: `null`
 
 Selectors to ignore, they can be defined globally (as an string) or specific per file (as an object).
 This comes useful when class is applied based on the value from the backend, e.g.
@@ -56,24 +63,28 @@ This comes useful when class is applied based on the value from the backend, e.g
 ### Object
 
 #### file
-* Type: `String`
-* Default: `null`
+
+- Type: `String`
+- Default: `null`
 
 Path to css file, relative to projectPath
 
 #### selectors
-* Type: `Array<String>`
-* Default: `null`
+
+- Type: `Array<String>`
+- Default: `null`
 
 Array of selectors inside the file
 
 #### all
-* Type: `Boolean`
-* Default: `false`
+
+- Type: `Boolean`
+- Default: `false`
 
 If set as true it will ignore selectors property (if defined) and will ignore whole file
 
-Example: *Ignore .dynamic-class in app.component.scss*:
+Example: _Ignore .dynamic-class in app.component.scss_:
+
 ```
 {
   file: "app.component.scss",
@@ -81,7 +92,8 @@ Example: *Ignore .dynamic-class in app.component.scss*:
 }
 ```
 
-Example: *Ignore whole app.component.scss*:
+Example: _Ignore whole app.component.scss_:
+
 ```
 {
   file: "app.component.scss",
@@ -90,9 +102,10 @@ Example: *Ignore whole app.component.scss*:
 ```
 
 ### Configuration example from lib:
+
 ```
 {
-    "path": "src/app", 
+    "path": "src/app",
     "ignore": [
         "ng-star",
         {
@@ -108,6 +121,7 @@ Example: *Ignore whole app.component.scss*:
 If ngClass is found on the element, same element will be duplicated with all possible combination of the classes on the same level and template will be then compared with css definition to match if all possible combinations are used
 
 Example:
+
 ```
 <div class="test">
      <div class="test" [ngClass]="{ class1: var1, class2: var2 }"></div>
@@ -115,6 +129,7 @@ Example:
 ```
 
 To compare against CSS it will recompile html with all possible cases:
+
 ```
 <div class="test">
      <div class="test" [ngClass]="{ class1: var1, class2: var2 }"></div>
@@ -125,7 +140,6 @@ To compare against CSS it will recompile html with all possible cases:
 ```
 
 **NOTE:** This library will not detect nested ngClasses
-
 
 ## Special cases
 
