@@ -2,22 +2,22 @@
  * These tests are using .ngx-unused-css.json as a configuration and templatest from test directory
  */
 const { execSync } = require('child_process');
-const childProcess = require('child_process');
 const ngxUnusedCss = function () {
     require(__dirname + "/index.js");
 }
 
 describe("ngx unused css", () => {
     it("should throw error if path not found in config", () => {
-        var spawn = childProcess.spawnSync("./index.js" , ["--config=ngx-unused-css-no-path"]);
-        var errorText = spawn.stderr.toString();
-        expect(errorText).toContain("Project path not defined");
+        process.argv.push('--config=ngx-unused-css-no-path');
+        expect(ngxUnusedCss).toThrow(new Error("Project path not defined"));
+        process.argv.pop();
     })
 
     it("should detect unused class", () => {
         let result = "";
+
         try {
-            result = ngxUnusedCss();  //execSync('./index.js --projectPath=test', {stdio: 'inherit'});    
+            ngxUnusedCss();
         } catch (error) {
             result = error.message.trim();    
         }
@@ -29,7 +29,7 @@ describe("ngx unused css", () => {
     })
 
     it("should ignore whole to-ignore.html and test configuration override", () => {
-        const result = execSync('./index.js --config=ngx-unused-css-ignore-test', {stdio: 'inherit'});
+        const result = execSync('node index.js --config=ngx-unused-css-ignore-test', {stdio: 'inherit'});
         expect(result).toBeNull();
     })
 

@@ -172,9 +172,7 @@ function findUnusedCss(content, cssPath) {
 
     const fileIgnore = config.ignore
       .filter(c => typeof c === "object")
-      .filter(c => {
-        return projectPath + "/" + c.file === cssPath;
-      });
+      .filter(c => path.join(projectPath, c.file) === cssPath);
 
     let ignore = ignoreSelectors;
 
@@ -232,25 +230,18 @@ if (unusedClasses.length > 0) {
   var result = '';
 
   unusedClasses.forEach(e => {
-
     const htmlPath = e[1];
     const cssPath = e[1].replace(".html", ".scss");
+    
+    result += chalk.red(htmlPath) + "\n";
+    result += chalk.red.bold(cssPath) + "\n";
 
-    console.log(chalk.red(htmlPath));
-    result += htmlPath + "\n";
-    console.log(chalk.red.bold(cssPath));
-    result += cssPath + "\n";
-
-    const cssClasses = e[0].join("\n");
-    result += cssClasses + "\n";
-    output = table([[chalk.green(cssClasses)]]);
- 
-    console.log(output);
+    const cssClasses = e[0].join("\n");    
+    result += table([[chalk.green(cssClasses)]]);
   });
 
   throw new Error(
-    "Unused CSS classes found:\n"
-    + result
+    "Unused CSS classes found:\n" + result
   );
 
 }
