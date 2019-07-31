@@ -19,7 +19,11 @@ How does it works:
 
 ## Installation
 
-`npm install ngx-unused-css --save-dev`
+Global: `npm install -g ngx-unused-css`
+
+or
+
+Local: `npm install ngx-unused-css --save-dev`
 
 ### Add configuration file in the root of the project
 
@@ -27,9 +31,11 @@ How does it works:
 
 ## Usage
 
-Run in CLI: `ngx-unused-css`
+Run in CLI if installed globally like: `ngx-unused-css`
 
-Override config path with CLI param: `ngx-unused-css --config=otherConfig`
+or add it to package.json > scripts: `"unused-css": "ngx-unused-css"` and run in CLI: `npm run unused-css`
+
+_Optionally, override config path with CLI param: `ngx-unused-css --config=otherConfig`_
 
 ## Options
 
