@@ -7,19 +7,13 @@ const ngxUnusedCss = function () {
 }
 
 describe("ngx unused css", () => {
-    it("should throw error if path not found in config", () => {
-        process.argv.push('--config=ngx-unused-css-no-path');
-        expect(ngxUnusedCss).toThrow(new Error("Project path not defined"));
-        process.argv.pop();
-    })
-
     it("should detect unused class", () => {
         let result = "";
 
         try {
             ngxUnusedCss();
         } catch (error) {
-            result = error.message.trim();    
+            result = error.message.trim();
         }
 
         // expect html file path, css file path & unused classes
