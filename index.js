@@ -14,27 +14,37 @@ const sass = require("node-sass");
 const jsdom = require("jsdom");
 const utils = require("./utils/utils.js");
 const { JSDOM } = jsdom;
-let config = require(path.resolve('.ngx-unused-css.json'));
+const meow = require('meow');
 
-if (!config) {
-  throw new Error("Configuration file .ngx-unused-css.json is missing.");
-}
+const cli = meow(`
+	Usage
+	  $ ngx-unused-css
 
-try {
-  process.argv.forEach(function(val, index) {
-    if (index > 1) {
-      let a = val.split("=");
-      if (a[0] === "--config") {
-        config = require(__dirname + "/." + a[1]);
-      }
+	Options
+	  --config, -c override default config path
+
+	Examples
+	  $ ngx-unused-css --config ngx-custom-unused-css.json
+`, {
+  flags: {
+    config: {
+      type: 'string',
+      alias: 'c'
     }
-  });
-} catch (error) {
-  throw new Error(error);
-}
+  }
+});
 
-if (!config.path) {
-  throw new Error("Project path not defined");
+let config = {
+  path: 'src/app',
+  ignore: []
+};
+
+const defaultConfigPath = '.ngx-unused-css.json';
+
+if (cli.flags.config) {
+  config = require(__dirname + "/." + cli.flags.config);
+} else if (fs.existsSync(path.resolve(defaultConfigPath))) {
+  config = require(path.resolve(defaultConfigPath));
 }
 
 let projectPath = config.path;
@@ -236,7 +246,7 @@ if (unusedClasses.length > 0) {
     result += chalk.red(htmlPath) + "\n";
     result += chalk.red.bold(cssPath) + "\n";
 
-    const cssClasses = e[0].join("\n");    
+    const cssClasses = e[0].join("\n");
     result += table([[chalk.green(cssClasses)]]);
   });
 
