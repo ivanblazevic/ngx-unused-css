@@ -7,26 +7,32 @@ class Main {
   constructor() {
     const unusedClasses = getUnusedClasses(conf.path);
 
-    if (unusedClasses.length > 0) {
-      console.error(
-        chalk.blue.bold("Unused CSS classes were found for the following files")
-      );
+    unusedClasses.then(res => {
+      if (res.length > 0) {
+        this.log(res);
+      }
+    });
+  }
 
-      var result = "";
+  private log(classes: any[]) {
+    console.error(
+      chalk.blue.bold("Unused CSS classes were found for the following files")
+    );
 
-      unusedClasses.forEach(e => {
-        const htmlPath = e[1];
-        const cssPath = e[1].replace(".html", ".scss");
+    var result = "";
 
-        result += chalk.red(htmlPath) + "\n";
-        result += chalk.red.bold(cssPath) + "\n";
+    classes.forEach(e => {
+      const htmlPath = e[1];
+      const cssPath = e[1].replace(".html", ".scss");
 
-        const cssClasses = e[0].join("\n");
-        result += table([[chalk.green(cssClasses)]]);
-      });
+      result += chalk.red(htmlPath) + "\n";
+      result += chalk.red.bold(cssPath) + "\n";
 
-      throw new Error("Unused CSS classes found:\n" + result);
-    }
+      const cssClasses = e[0].join("\n");
+      result += table([[chalk.green(cssClasses)]]);
+    });
+
+    throw new Error("Unused CSS classes found:\n" + result);
   }
 }
 

@@ -1,10 +1,10 @@
-import Purgecss, { Options, RawContent } from "purgecss";
+import PurgeCSS from "purgecss";
 import compileSCSS from "./compileSCSS";
 import parseNgClass from "../helpers/parseNgClass";
 import { conf } from "../..";
 import { Ignore } from "../config";
-const path = require("path");
 
+const path = require("path");
 const projectPath = conf;
 
 // const ignoreSelectors = SELECTORS_TO_IGNORE.concat(
@@ -27,7 +27,7 @@ const filesToIgnore = (cssPath: string) => {
  * @param {string} content
  * @param {string} cssPath
  */
-function findUnusedCss(content: string, cssPath: string) {
+async function findUnusedCss(content: string, cssPath: string) {
   let css = "";
   try {
     if (!cssPath) return;
@@ -39,23 +39,21 @@ function findUnusedCss(content: string, cssPath: string) {
   try {
     const html = parseNgClass(content, cssPath);
 
-    const options: Options = {
+    const options = {
       content: [
         {
           raw: html,
           extension: "html"
         }
       ],
-      css: [{ raw: css } as RawContent],
+      css: [{ raw: css }],
       rejected: true
     };
 
-    var purgecss = new Purgecss(options);
-    var purgecssResult = purgecss.purge();
+    const purgecssResult = await new PurgeCSS().purge(options);
+
     let result = purgecssResult[0].rejected;
-
     let ignore = ignoreSelectors;
-
     const fileIgnore = filesToIgnore(cssPath);
 
     if (fileIgnore.length > 0) {
