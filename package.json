@@ -46,6 +46,7 @@
     "@types/jasmine": "^3.5.10",
     "@types/jsdom": "^16.2.0",
     "@types/node": "^13.11.0",
+    "@types/table": "^5.0.0",
     "husky": "^4.2.3",
     "jasmine": "^3.5.0",
     "jasmine-core": "^3.4.0",

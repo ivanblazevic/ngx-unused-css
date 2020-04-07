@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
 var jsdom_1 = require("jsdom");
+var combine_1 = tslib_1.__importDefault(require("./combine"));
 /**
  * Create copy of reference element and add classes passed as a params
  * @param { JSDOM } dom
@@ -36,7 +38,7 @@ function parseNgClass(html, cssPath) {
                     classes
                   );
                   */
-                var classCombinations = combine(classes);
+                var classCombinations = combine_1.default(classes);
                 classCombinations.forEach(function (c) {
                     var el = createCopyOfElementWithClasses(dom, e, c);
                     e.parentNode.insertBefore(el, e.nextSibling);

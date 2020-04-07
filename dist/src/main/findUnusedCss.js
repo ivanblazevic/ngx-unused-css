@@ -5,13 +5,12 @@ var purgecss_1 = tslib_1.__importDefault(require("purgecss"));
 var compileSCSS_1 = tslib_1.__importDefault(require("./compileSCSS"));
 var parseNgClass_1 = tslib_1.__importDefault(require("../helpers/parseNgClass"));
 var __1 = require("../..");
+var constants_1 = require("../constants");
 var path = require("path");
 var projectPath = __1.conf;
-// const ignoreSelectors = SELECTORS_TO_IGNORE.concat(
-//   // @ts-ignore
-//   config.ignore.filter(c => typeof c === "string")
-// );
-var ignoreSelectors = [];
+var ignoreSelectors = constants_1.SELECTORS_TO_IGNORE.concat(
+// @ts-ignore
+__1.conf && __1.conf.ignore && __1.conf.ignore.filter(function (c) { return typeof c === "string"; }));
 var filesToIgnore = function (cssPath) {
     return __1.conf.ignore
         .filter(function (c) { return typeof c === "object"; })

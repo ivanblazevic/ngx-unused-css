@@ -1,4 +1,5 @@
 import { JSDOM } from "jsdom";
+import combine from "./combine";
 
 /**
  * Create copy of reference element and add classes passed as a params

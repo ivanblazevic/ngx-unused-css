@@ -2,7 +2,11 @@ import findHtml from "./../helpers/findHtml";
 import findUnusedCss from "./findUnusedCss";
 const fs = require("fs");
 
-async function unusedClassMapper(cssPath, html, htmlFile) {
+async function unusedClassMapper(
+  cssPath: string,
+  html: string,
+  htmlFile: string
+) {
   try {
     fs.readFileSync(cssPath);
     try {

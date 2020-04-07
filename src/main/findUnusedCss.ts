@@ -3,16 +3,15 @@ import compileSCSS from "./compileSCSS";
 import parseNgClass from "../helpers/parseNgClass";
 import { conf } from "../..";
 import { Ignore } from "../config";
+import { SELECTORS_TO_IGNORE } from "../constants";
 
 const path = require("path");
 const projectPath = conf;
 
-// const ignoreSelectors = SELECTORS_TO_IGNORE.concat(
-//   // @ts-ignore
-//   config.ignore.filter(c => typeof c === "string")
-// );
-
-const ignoreSelectors = [];
+const ignoreSelectors = SELECTORS_TO_IGNORE.concat(
+  // @ts-ignore
+  conf && conf.ignore && conf.ignore.filter(c => typeof c === "string")
+);
 
 const filesToIgnore = (cssPath: string) => {
   return conf.ignore
