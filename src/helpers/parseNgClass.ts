@@ -20,7 +20,7 @@ function createCopyOfElementWithClasses(dom, e, classes) {
  * @param {string} html
  * @param {string} cssPath
  */
-function parseNgClass(html, cssPath) {
+function parseNgClass(html: string, cssPath: string) {
   const dom = new JSDOM(html);
 
   var all = dom.window.document.getElementsByTagName("*");

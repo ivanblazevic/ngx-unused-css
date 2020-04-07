@@ -3,7 +3,7 @@
  * e.g. if param is ["a", "b"] it will return [["a"], ["b"], ["a", "b"]]
  * @param { Array<string> } a - Array of strings
  */
-var combine = function(a) {
+function combine(a: string[]) {
   var fn = function(n, src, got, all) {
     if (n == 0) {
       if (got.length > 0) {
@@ -22,4 +22,6 @@ var combine = function(a) {
   }
   all.push(a);
   return all;
-};
+}
+
+export default combine;
