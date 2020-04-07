@@ -3,7 +3,7 @@
 /*
 Find unused css inside Angular components
 */
-import Main from "./src/main";
+//import Main from "./src/main";
 import { Config } from "./src/config";
 const path = require("path");
 const fs = require("fs");
@@ -44,4 +44,12 @@ if (cli.flags.config) {
 
 export const conf = config;
 
-new Main();
+// Use dynamic import so config is initialized on every import
+async function start() {
+  const mainPromise = import("./src/main");
+  mainPromise.then(res => {
+    new res.default();
+  });
+}
+
+start();
