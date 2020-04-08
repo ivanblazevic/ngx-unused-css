@@ -5,6 +5,7 @@ const path = require("path");
 function findHtml(base: string, ext?: string, files?: any, result?: any) {
   files = files || fs.readdirSync(base);
   result = result || [];
+  ext = "html";
 
   files.forEach(function(file) {
     let newbase = path.join(base, file);
