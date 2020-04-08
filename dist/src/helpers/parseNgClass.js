@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
 var jsdom_1 = require("jsdom");
 var combine_1 = tslib_1.__importDefault(require("./combine"));
+var extractClassesFromNgClass_1 = tslib_1.__importDefault(require("./extractClassesFromNgClass"));
 /**
  * Create copy of reference element and add classes passed as a params
  * @param { JSDOM } dom
@@ -30,7 +31,7 @@ function parseNgClass(html, cssPath) {
         var attrs = Array.prototype.slice.call(e.attributes);
         attrs.forEach(function (a) {
             if (a.name === "[ngclass]") {
-                var classes = extractClassesFromNgClass(a.value);
+                var classes = extractClassesFromNgClass_1.default(a.value);
                 e.removeAttribute("[ngclass]");
                 /*
                   console.log(

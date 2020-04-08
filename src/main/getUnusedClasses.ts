@@ -21,7 +21,7 @@ async function unusedClassMapper(
 }
 
 function getUnusedClasses(projectPath: string) {
-  const list = findHtml(projectPath, "html");
+  const list = findHtml(projectPath);
 
   const result = list.map(element => {
     const htmlFile = element;

@@ -1,5 +1,6 @@
 import { JSDOM } from "jsdom";
 import combine from "./combine";
+import extractClassesFromNgClass from "./extractClassesFromNgClass";
 
 /**
  * Create copy of reference element and add classes passed as a params

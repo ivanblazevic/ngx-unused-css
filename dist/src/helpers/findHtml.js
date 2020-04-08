@@ -9,7 +9,7 @@ function findHtml(base, ext, files, result) {
     files.forEach(function (file) {
         var newbase = path.join(base, file);
         if (fs.statSync(newbase).isDirectory()) {
-            result = findHtml(newbase, ext, fs.readdirSync(newbase), result);
+            result = findHtml(newbase, "html", fs.readdirSync(newbase), result);
         }
         else {
             if (file.substr(-1 * (ext.length + 1)) == "." + ext) {

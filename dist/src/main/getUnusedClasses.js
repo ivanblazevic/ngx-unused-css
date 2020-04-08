@@ -33,7 +33,7 @@ function unusedClassMapper(cssPath, html, htmlFile) {
     });
 }
 function getUnusedClasses(projectPath) {
-    var list = findHtml_1.default(projectPath, "html");
+    var list = findHtml_1.default(projectPath);
     var result = list.map(function (element) {
         var htmlFile = element;
         var html = fs.readFileSync(htmlFile, "utf8");

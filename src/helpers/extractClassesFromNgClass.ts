@@ -2,7 +2,7 @@
  * Extract ngClass configuration and return array of all classes found
  * @param {string} value
  */
-function extractClassesFromNgClass(value) {
+function extractClassesFromNgClass(value: string) {
   var found = [],
     rxp = /{([^}]+)}/g,
     curMatch;
@@ -18,3 +18,5 @@ function extractClassesFromNgClass(value) {
 
   return classes;
 }
+
+export default extractClassesFromNgClass;

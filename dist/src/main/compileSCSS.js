@@ -7,10 +7,8 @@ var path = require("path");
 /**
  * Resolve tilda relative importes from node_modules
  * @param {*} url
- * @param {*} prev
- * @param {*} done
  */
-function importer(url, prev, done) {
+function importer(url) {
     if (url[0] === "~") {
         url = path.resolve("node_modules", url.substr(1));
     }
