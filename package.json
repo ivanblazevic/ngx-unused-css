@@ -27,7 +27,7 @@
     "tslib": "^1.11.1"
   },
   "bin": {
-    "ngx-unused-css": "./index.js"
+    "ngx-unused-css": "./dist/index.js"
   },
   "bugs": "https://github.com/ivanblazevic/ngx-unused-css/issues",
   "homepage": "https://github.com/ivanblazevic/ngx-unused-css",
