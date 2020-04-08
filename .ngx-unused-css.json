@@ -1,6 +1,10 @@
 {
-    "path": "test", 
-    "ignore": [
-        "ng-star"
-    ]
+  "path": "test",
+  "ignore": [
+    "ng-star",
+    {
+      "file": "to-ignore/subdirectory-to-ignore/subdirectory-to-ignore.html",
+      "selectors": [".sub-no-used"]
+    }
+  ]
 }

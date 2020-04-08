@@ -1,7 +1,7 @@
 export interface Ignore {
   file: string;
   all?: boolean;
-  selectors?: string;
+  selectors?: string[];
 }
 
 export interface Config {

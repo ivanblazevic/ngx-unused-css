@@ -1,5 +1,9 @@
 .test {
   width: 20px;
+
+  &.sub-no-used {
+    width: 20px;
+  }
 }
 
 .class-no-used {

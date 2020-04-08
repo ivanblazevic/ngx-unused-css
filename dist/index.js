@@ -25,6 +25,10 @@ else if (fs.existsSync(path.resolve(defaultConfigPath))) {
     config = require(path.resolve(defaultConfigPath));
 }
 exports.conf = config;
+function getConfig() {
+    return config;
+}
+exports.getConfig = getConfig;
 // Use dynamic import so config is initialized on every import
 function start() {
     return tslib_1.__awaiter(this, void 0, void 0, function () {

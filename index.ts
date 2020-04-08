@@ -9,7 +9,6 @@ const path = require("path");
 const fs = require("fs");
 const meow = require("meow");
 const defaultConfigPath = ".ngx-unused-css.json";
-
 const cli = meow(
   `
 	Usage
@@ -43,6 +42,10 @@ if (cli.flags.config) {
 }
 
 export const conf = config;
+
+export function getConfig() {
+  return config;
+}
 
 // Use dynamic import so config is initialized on every import
 async function start() {

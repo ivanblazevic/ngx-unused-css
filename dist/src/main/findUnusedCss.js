@@ -4,18 +4,7 @@ var tslib_1 = require("tslib");
 var purgecss_1 = tslib_1.__importDefault(require("purgecss"));
 var compileSCSS_1 = tslib_1.__importDefault(require("./compileSCSS"));
 var parseNgClass_1 = tslib_1.__importDefault(require("../helpers/parseNgClass"));
-var __1 = require("../..");
-var constants_1 = require("../constants");
-var path = require("path");
-var projectPath = __1.conf;
-var ignoreSelectors = constants_1.SELECTORS_TO_IGNORE.concat(
-// @ts-ignore
-__1.conf && __1.conf.ignore && __1.conf.ignore.filter(function (c) { return typeof c === "string"; }));
-var filesToIgnore = function (cssPath) {
-    return __1.conf.ignore
-        .filter(function (c) { return typeof c === "object"; })
-        .filter(function (c) { return path.join(projectPath, c.file) === cssPath; });
-};
+var whitelist_1 = tslib_1.__importDefault(require("../helpers/whitelist"));
 /**
  * Find unused css classes per file and returns array of them
  * @param {string} content
@@ -23,7 +12,7 @@ var filesToIgnore = function (cssPath) {
  */
 function findUnusedCss(content, cssPath) {
     return tslib_1.__awaiter(this, void 0, void 0, function () {
-        var css, html, options, purgecssResult, result, ignore_1, fileIgnore, selectorsToIgnore, error_1;
+        var css, html, options, purgecssResult, result, error_1;
         return tslib_1.__generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -54,24 +43,8 @@ function findUnusedCss(content, cssPath) {
                 case 2:
                     purgecssResult = _a.sent();
                     result = purgecssResult[0].rejected;
-                    ignore_1 = ignoreSelectors;
-                    fileIgnore = filesToIgnore(cssPath);
-                    if (fileIgnore.length > 0) {
-                        selectorsToIgnore = fileIgnore[0].selectors;
-                        ignore_1 = ignore_1.concat(selectorsToIgnore);
-                        // ignore all unused classes from file
-                        if (fileIgnore[0].all) {
-                            return [2 /*return*/, []];
-                        }
-                    }
-                    // filter ignored selectors
-                    result = result.filter(function (c) {
-                        var ignoredSelectorFound = ignore_1.some(function (s) {
-                            return c.indexOf(s) > -1;
-                        });
-                        return !ignoredSelectorFound;
-                    });
-                    return [2 /*return*/, result];
+                    console.log("result", result);
+                    return [2 /*return*/, whitelist_1.default(result, cssPath)];
                 case 3:
                     error_1 = _a.sent();
                     console.error(error_1);
