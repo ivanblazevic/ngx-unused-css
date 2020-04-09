@@ -1,5 +1,5 @@
 {
-  "path": "examples/simpleAngularApp/src/app",
+  "path": "src/app",
   "ignore": [
     "ng-star",
     {
