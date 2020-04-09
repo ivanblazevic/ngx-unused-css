@@ -43,7 +43,6 @@ function findUnusedCss(content, cssPath) {
                 case 2:
                     purgecssResult = _a.sent();
                     result = purgecssResult[0].rejected;
-                    console.log("result", result);
                     return [2 /*return*/, whitelist_1.default(result, cssPath)];
                 case 3:
                     error_1 = _a.sent();

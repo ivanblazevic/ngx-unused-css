@@ -18,7 +18,9 @@ var Main = /** @class */ (function () {
     Main.prototype.log = function (classes) {
         console.error(chalk_1.default.blue.bold("Unused CSS classes were found for the following files"));
         var result = "";
-        classes.forEach(function (e) {
+        classes
+            .filter(function (c) { return c[0].length > 0; })
+            .forEach(function (e) {
             var htmlPath = e[1];
             var cssPath = e[1].replace(".html", ".scss");
             result += chalk_1.default.red(htmlPath) + "\n";

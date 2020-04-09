@@ -34,8 +34,6 @@ async function findUnusedCss(content: string, cssPath: string) {
     const purgecssResult = await new PurgeCSS().purge(options);
     let result = purgecssResult[0].rejected;
 
-    console.log("result", result);
-
     return whitelist(result, cssPath);
   } catch (error) {
     console.error(error);
