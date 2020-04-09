@@ -10,17 +10,16 @@ var Main = /** @class */ (function () {
         var _this = this;
         var unusedClasses = getUnusedClasses_1.default(index_1.conf.path);
         unusedClasses.then(function (res) {
-            if (res.length > 0) {
-                _this.log(res);
+            var unused = res.filter(function (c) { return c[0].length > 0; });
+            if (unused.length > 0) {
+                _this.log(unused);
             }
         });
     }
     Main.prototype.log = function (classes) {
         console.error(chalk_1.default.blue.bold("Unused CSS classes were found for the following files"));
         var result = "";
-        classes
-            .filter(function (c) { return c[0].length > 0; })
-            .forEach(function (e) {
+        classes.forEach(function (e) {
             var htmlPath = e[1];
             var cssPath = e[1].replace(".html", ".scss");
             result += chalk_1.default.red(htmlPath) + "\n";

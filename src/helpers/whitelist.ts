@@ -19,9 +19,6 @@ const ignoreSelectors = SELECTORS_TO_IGNORE.concat(
 
 function whitelist(classes: string[], cssPath: string) {
   const ignoreFileMatched = fileToIgnore(cssPath);
-
-  console.log("ignoreFileMatched", cssPath, ignoreFileMatched);
-
   return handler(classes, ignoreFileMatched, ignoreSelectors);
 }
 
