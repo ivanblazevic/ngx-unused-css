@@ -7,6 +7,8 @@
 
 # Angular unused css detection
 
+## TLDR: Simple example can be found here: https://github.com/ivanblazevic/ngx-unused-css/tree/master/examples/simpleAngularApp
+
 How does it works:
 
 - it finds all `.html` files inside the project and then pairs it with their styling files;
