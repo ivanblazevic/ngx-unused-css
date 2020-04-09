@@ -4,7 +4,6 @@ function handler(classes, fileIgnore, ignore) {
     if (fileIgnore) {
         var selectorsToIgnore = fileIgnore.selectors;
         ignore = ignore.concat(selectorsToIgnore);
-        // console.log(ignore);
         // ignore all unused classes from file
         if (fileIgnore.all) {
             return [];

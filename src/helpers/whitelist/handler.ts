@@ -9,8 +9,6 @@ export function handler(
     const selectorsToIgnore = fileIgnore.selectors;
     ignore = ignore.concat(selectorsToIgnore);
 
-    // console.log(ignore);
-
     // ignore all unused classes from file
     if (fileIgnore.all) {
       return [];
