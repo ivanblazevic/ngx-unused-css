@@ -2,14 +2,13 @@ import { conf } from "./../index";
 import getUnusedClasses from "./main/getUnusedClasses";
 import chalk from "chalk";
 import { table } from "table";
+import UnusedClasses from "./main/getUnusedClasses";
 
 class Main {
   constructor() {
-    const unusedClasses = getUnusedClasses(conf.path);
-    unusedClasses.then(res => {
-      const unused: string[][] = res.filter(c => c[0].length > 0) as string[][];
-      if (unused.length > 0) {
-        this.log(unused);
+    new UnusedClasses().getUnusedClasses(conf.path).then(res => {
+      if (res.length > 0) {
+        this.log(res);
       }
     });
   }

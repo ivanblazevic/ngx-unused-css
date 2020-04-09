@@ -2,17 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
 var index_1 = require("./../index");
-var getUnusedClasses_1 = tslib_1.__importDefault(require("./main/getUnusedClasses"));
 var chalk_1 = tslib_1.__importDefault(require("chalk"));
 var table_1 = require("table");
+var getUnusedClasses_1 = tslib_1.__importDefault(require("./main/getUnusedClasses"));
 var Main = /** @class */ (function () {
     function Main() {
         var _this = this;
-        var unusedClasses = getUnusedClasses_1.default(index_1.conf.path);
-        unusedClasses.then(function (res) {
-            var unused = res.filter(function (c) { return c[0].length > 0; });
-            if (unused.length > 0) {
-                _this.log(unused);
+        new getUnusedClasses_1.default().getUnusedClasses(index_1.conf.path).then(function (res) {
+            if (res.length > 0) {
+                _this.log(res);
             }
         });
     }
