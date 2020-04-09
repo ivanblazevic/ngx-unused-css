@@ -1,5 +1,5 @@
-import findUnusedCss from "./findUnusedCss";
 import FindHtml from "./../helpers/findHtml";
+import FindUnusedCss from "./findUnusedCss";
 const fs = require("fs");
 
 export default class UnusedClasses {
@@ -7,7 +7,7 @@ export default class UnusedClasses {
     try {
       fs.readFileSync(cssPath);
       try {
-        const classes = await findUnusedCss(html, cssPath);
+        const classes = await new FindUnusedCss().findUnusedCss(html, cssPath);
         return [classes, htmlFile];
       } catch (error) {}
     } catch (error) {

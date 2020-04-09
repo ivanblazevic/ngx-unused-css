@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
-var findUnusedCss_1 = tslib_1.__importDefault(require("./findUnusedCss"));
 var findHtml_1 = tslib_1.__importDefault(require("./../helpers/findHtml"));
+var findUnusedCss_1 = tslib_1.__importDefault(require("./findUnusedCss"));
 var fs = require("fs");
 var UnusedClasses = /** @class */ (function () {
     function UnusedClasses() {
@@ -18,7 +18,7 @@ var UnusedClasses = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, findUnusedCss_1.default(html, cssPath)];
+                        return [4 /*yield*/, new findUnusedCss_1.default().findUnusedCss(html, cssPath)];
                     case 2:
                         classes = _a.sent();
                         return [2 /*return*/, [classes, htmlFile]];
