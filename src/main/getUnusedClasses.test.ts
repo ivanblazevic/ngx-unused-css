@@ -1,19 +1,27 @@
 import UnusedClasses from "./getUnusedClasses";
+import { ImportMock } from "ts-mock-imports";
+import * as findHtmlModule from "./../helpers/findHtml";
 
 describe("GetUnusedClasses", () => {
   it("should return only unused classes from the results", () => {
     const promiseA = new Promise((resolutionFunc, rejectionFunc) => {
-      resolutionFunc(777);
+      resolutionFunc([["class1"], "file.html"]);
     });
 
-    // const a = new UnusedClasses();
+    const mockManager = ImportMock.mockClass(findHtmlModule);
+    // @ts-ignore
+    mockManager.mock("findHtml", [""]);
 
-    // spyOnProperty(a, "mapClasses").and.returnValue(promiseA);
+    const a = new UnusedClasses();
 
-    // a.getUnusedClasses("conf.path").then(res => {
-    //   console.log(res);
-    // });
+    // @ts-ignore
+    spyOn(a, "mapClasses").and.returnValue(Promise.all([promiseA]));
 
-    expect(2).toBe(2);
+    a.getUnusedClasses("").then(res => {
+      // @ts-ignore
+      expect(res).toEqual([[["class1"], "file.html"]]);
+    });
+
+    ImportMock.restore();
   });
 });

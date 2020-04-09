@@ -1,4 +1,4 @@
-import findHtml from "./findHtml";
+import FindHtml from "./findHtml";
 import mock from "mock-fs";
 
 describe("FindHtml", () => {
@@ -13,8 +13,8 @@ describe("FindHtml", () => {
     });
   });
 
-  it("should create all possible variations from given values in the ngClass attribute", () => {
-    const results = findHtml("base");
+  it("should return array of html files", () => {
+    const results = new FindHtml().findHtml("base");
     expect(results).toEqual([
       "base/somefile.html",
       "base/subdir/somefilefromsubdir.html"

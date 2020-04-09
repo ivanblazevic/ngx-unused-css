@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
-var findHtml_1 = tslib_1.__importDefault(require("./../helpers/findHtml"));
 var findUnusedCss_1 = tslib_1.__importDefault(require("./findUnusedCss"));
+var findHtml_1 = tslib_1.__importDefault(require("./../helpers/findHtml"));
 var fs = require("fs");
 var UnusedClasses = /** @class */ (function () {
     function UnusedClasses() {
@@ -46,7 +46,7 @@ var UnusedClasses = /** @class */ (function () {
         return Promise.all(promiseArray);
     };
     UnusedClasses.prototype.getUnusedClasses = function (projectPath) {
-        var list = findHtml_1.default(projectPath);
+        var list = new findHtml_1.default().findHtml(projectPath);
         return this.mapClasses(list).then(function (r) {
             return r.filter(function (c) { return c[0].length > 0; });
         });

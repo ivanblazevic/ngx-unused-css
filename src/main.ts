@@ -1,5 +1,4 @@
 import { conf } from "./../index";
-import getUnusedClasses from "./main/getUnusedClasses";
 import chalk from "chalk";
 import { table } from "table";
 import UnusedClasses from "./main/getUnusedClasses";

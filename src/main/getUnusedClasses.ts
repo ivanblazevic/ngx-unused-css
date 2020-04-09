@@ -1,5 +1,5 @@
-import findHtml from "./../helpers/findHtml";
 import findUnusedCss from "./findUnusedCss";
+import FindHtml from "./../helpers/findHtml";
 const fs = require("fs");
 
 export default class UnusedClasses {
@@ -29,7 +29,7 @@ export default class UnusedClasses {
   }
 
   getUnusedClasses(projectPath: string): Promise<string[][]> {
-    const list = findHtml(projectPath);
+    const list = new FindHtml().findHtml(projectPath);
     return this.mapClasses(list).then(r =>
       r.filter(c => c[0].length > 0)
     ) as Promise<string[][]>;
