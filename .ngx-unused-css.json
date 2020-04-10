@@ -6,5 +6,6 @@
       "file": "app.component.scss",
       "selectors": [".unused-to-ignore"]
     }
-  ]
+  ],
+  "globalStyles": "examples/simpleAngularApp/src/styles.scss"
 }

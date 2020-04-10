@@ -9,4 +9,5 @@ export interface Config {
   ignore: (string | Ignore)[];
   importer?: string;
   includePaths?: string;
+  globalStyles?: string;
 }

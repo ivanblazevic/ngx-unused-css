@@ -5,14 +5,28 @@ import UnusedClasses from "./main/getUnusedClasses";
 
 class Main {
   constructor() {
-    new UnusedClasses().getUnusedClasses(conf.path).then(res => {
-      if (res.length > 0) {
-        this.log(res);
+    const unusedClasses = new UnusedClasses();
+
+    unusedClasses.getUnusedClasses(conf.path).then(res => {
+      if (conf.globalStyles) {
+        unusedClasses.getGlobalUnusedClasses(conf.globalStyles).then(r => {
+          if (r.length > 0) {
+            // @ts-ignore
+            res.push([r, "***** GLOBAL UNUSED CSS *****"]);
+          }
+          if (res.length > 0) {
+            this.log(res);
+          }
+        });
+      } else {
+        if (res.length > 0) {
+          this.log(res);
+        }
       }
     });
   }
 
-  private log(classes: string[][]) {
+  private log(classes: [string[], string]) {
     console.error(
       chalk.blue.bold("Unused CSS classes were found for the following files")
     );

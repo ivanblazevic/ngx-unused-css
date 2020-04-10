@@ -8,9 +8,23 @@ var getUnusedClasses_1 = tslib_1.__importDefault(require("./main/getUnusedClasse
 var Main = /** @class */ (function () {
     function Main() {
         var _this = this;
-        new getUnusedClasses_1.default().getUnusedClasses(index_1.conf.path).then(function (res) {
-            if (res.length > 0) {
-                _this.log(res);
+        var unusedClasses = new getUnusedClasses_1.default();
+        unusedClasses.getUnusedClasses(index_1.conf.path).then(function (res) {
+            if (index_1.conf.globalStyles) {
+                unusedClasses.getGlobalUnusedClasses(index_1.conf.globalStyles).then(function (r) {
+                    if (r.length > 0) {
+                        // @ts-ignore
+                        res.push([r, "***** GLOBAL UNUSED CSS *****"]);
+                    }
+                    if (res.length > 0) {
+                        _this.log(res);
+                    }
+                });
+            }
+            else {
+                if (res.length > 0) {
+                    _this.log(res);
+                }
             }
         });
     }

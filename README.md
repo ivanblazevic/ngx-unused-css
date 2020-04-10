@@ -48,6 +48,13 @@ _Optionally, override config path with CLI param: `ngx-unused-css --config=other
 
 Path to a project, for Angular it is usually `src/app`
 
+### globalStyles
+
+- Type: `String`
+- Default: `null`
+
+Path to global styles, usally it is `src/styles.scss`
+
 ### importer
 
 Custom importer handler, more details here: https://github.com/sass/node-sass#importer--v200---experimental
