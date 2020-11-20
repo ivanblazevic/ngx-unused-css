@@ -7,9 +7,9 @@ class Main {
   constructor() {
     const unusedClasses = new UnusedClasses();
 
-    unusedClasses.getUnusedClasses(conf.path).then(res => {
+    unusedClasses.getUnusedClasses(conf.path).then((res) => {
       if (conf.globalStyles) {
-        unusedClasses.getGlobalUnusedClasses(conf.globalStyles).then(r => {
+        unusedClasses.getGlobalUnusedClasses(conf.globalStyles).then((r) => {
           if (r.length > 0) {
             // @ts-ignore
             res.push([r, "***** GLOBAL UNUSED CSS *****"]);
@@ -26,14 +26,14 @@ class Main {
     });
   }
 
-  private log(classes: [string[], string]) {
+  private log(classes: [[string[], string]]) {
     console.error(
       chalk.blue.bold("Unused CSS classes were found for the following files")
     );
 
     var result = "";
 
-    classes.forEach(e => {
+    classes.forEach((e: [string[], string]) => {
       const htmlPath = e[1];
       const cssPath = e[1].replace(".html", ".scss");
 
