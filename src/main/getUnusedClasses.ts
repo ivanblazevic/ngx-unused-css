@@ -27,7 +27,7 @@ export default class UnusedClasses {
   }
 
   mapClasses(list: any) {
-    const promiseArray = list.map(element => {
+    const promiseArray = list.map((element) => {
       const htmlPath = element;
       const htmlContent = fs.readFileSync(htmlPath, "utf8");
       const cssPath = htmlPath.replace(".html", ".scss"); // same path as html but css means it is component
@@ -39,7 +39,7 @@ export default class UnusedClasses {
     return Promise.all(promiseArray);
   }
 
-  getUnusedClasses(projectPath: string): Promise<[string[], string]> {
+  getUnusedClasses(projectPath: string): Promise<[[string[], string]]> {
     const list = new FindHtml().findHtml(projectPath);
     return this.mapClasses(list).then(r => {
       return r.filter((c=[]) => {
@@ -47,7 +47,7 @@ export default class UnusedClasses {
           return c[0].length > 0;
         }
       });
-    }) as Promise<[string[], string]>;
+    }) as Promise<[[string[], string]]>;
   }
 
   getGlobalUnusedClasses(globalStyles: string) {
