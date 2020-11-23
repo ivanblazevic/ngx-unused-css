@@ -41,8 +41,12 @@ export default class UnusedClasses {
 
   getUnusedClasses(projectPath: string): Promise<[[string[], string]]> {
     const list = new FindHtml().findHtml(projectPath);
-    return this.mapClasses(list).then((r) => {
-      return r.filter((c) => c[0].length > 0);
+    return this.mapClasses(list).then(r => {
+      return r.filter((c=[]) => {
+        if (c[0]) {
+          return c[0].length > 0;
+        }
+      });
     }) as Promise<[[string[], string]]>;
   }
 

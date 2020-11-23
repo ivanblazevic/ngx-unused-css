@@ -50,7 +50,12 @@ var UnusedClasses = /** @class */ (function () {
     UnusedClasses.prototype.getUnusedClasses = function (projectPath) {
         var list = new findHtml_1.default().findHtml(projectPath);
         return this.mapClasses(list).then(function (r) {
-            return r.filter(function (c) { return c[0].length > 0; });
+            return r.filter(function (c) {
+                if (c === void 0) { c = []; }
+                if (c[0]) {
+                    return c[0].length > 0;
+                }
+            });
         });
     };
     UnusedClasses.prototype.getGlobalUnusedClasses = function (globalStyles) {
