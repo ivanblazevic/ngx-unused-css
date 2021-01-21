@@ -1,4 +1,4 @@
-import sass from "node-sass";
+import sass from "sass";
 import { conf } from "../..";
 const path = require("path");
 

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
-var node_sass_1 = tslib_1.__importDefault(require("node-sass"));
+var sass_1 = tslib_1.__importDefault(require("sass"));
 var __1 = require("../..");
 var path = require("path");
 /**
@@ -19,7 +19,7 @@ function importer(url) {
  * @param {string} cssPath
  */
 function compileSCSS(cssPath) {
-    var result = node_sass_1.default.renderSync({
+    var result = sass_1.default.renderSync({
         file: cssPath,
         importer: [importer, __1.conf.importer],
         includePaths: __1.conf.includePaths
