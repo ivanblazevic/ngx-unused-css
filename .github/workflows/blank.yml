@@ -18,7 +18,14 @@ jobs:
 
     steps:
       - name: Build & Test
-        run: |
+        uses: actions/checkout@v2.1.0
+      - run: |
           ls
 #          npm ci
 #          npm test
+
+
+      # - name: NPM Publish
+      #   # You may pin to the exact commit or the version.
+      #   # uses: JS-DevTools/npm-publish@0f451a94170d1699fd50710966d48fb26194d939
+      #   uses: JS-DevTools/npm-publish@v1
