@@ -11,21 +11,13 @@ jobs:
         os: [ubuntu-latest]
 
     steps:
-      # - name: Build & Test
-      #   uses: actions/checkout@v2.1.0
-      # - run: npm ci
-      # - run: npm test
-      
-      - name: Tag package.json
-      #  if: "contains(github.ref, 'refs/tags/')"
-        run: | 
-          RELEASE_VERSION=${GITHUB_REF#refs/*/}
-          echo $RELEASE_VERSION
+      - name: Build & Test
+        uses: actions/checkout@v2.1.0
+      - run: npm ci
+      - run: npm test
 
-      # - name: NPM Publish
-      #   if: "contains(github.ref, 'refs/tags/')"
-      #   run: |
-      #       echo "Test"
-      #   uses: JS-DevTools/npm-publish@v1
-      #   with:
-      #     token: ${{ secrets.NPM_TOKEN }}
+      - name: NPM Publish
+        if: "contains(github.ref, 'refs/tags/')"
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
