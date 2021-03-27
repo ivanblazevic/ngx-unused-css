@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Build & Test
         uses: actions/checkout@v2.1.0
-      - run: github.ref
+      - run: echo ${{ github.ref }}
       # - run: npm ci
       # - run: npm test
 
