@@ -1,6 +1,0 @@
-language: node_js
-node_js:
-  - "10.15.3"
-before_script:
-  - npm install
-  - npm test
