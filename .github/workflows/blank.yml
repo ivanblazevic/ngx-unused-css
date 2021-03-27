@@ -11,15 +11,15 @@ jobs:
         os: [ubuntu-latest]
 
     steps:
-      - name: Build & Test
-        uses: actions/checkout@v2.1.0
-      - run: npm ci
-      - run: npm test
+      # - name: Build & Test
+      #   uses: actions/checkout@v2.1.0
+      # - run: npm ci
+      # - run: npm test
       
       - name: Tag package.json
       #  if: "contains(github.ref, 'refs/tags/')"
         run: | 
-          "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
           echo $RELEASE_VERSION
 
       # - name: NPM Publish
