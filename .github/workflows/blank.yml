@@ -18,5 +18,6 @@ jobs:
 
     steps:
       - name: Build & Test
-        run: node --version
-
+        run: |
+          npm ci
+          npm test
