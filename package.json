@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsc -w",
+    "build": "tsc",
     "test": "ts-node node_modules/jasmine/bin/jasmine --config=./jasmine.json",
     "test-lib": "node dist/index.js"
   },
