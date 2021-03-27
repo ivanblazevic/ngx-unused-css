@@ -26,6 +26,7 @@ jobs:
         if: ${{ github.ref == 'refs/tags/' }}
           echo "it is tag"
       - name: NPM Publish
+        uses: actions/checkout@v2.1.0
       - run: echo "test"
       # - name: NPM Publish
       #   uses: JS-DevTools/npm-publish@v1
