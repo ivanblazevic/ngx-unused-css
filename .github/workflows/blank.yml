@@ -1,11 +1,5 @@
 name: CI
 
-# on:
-#   push:
-#     branches: [master]
-#   pull_request:
-#     branches: [master]
-
 on: [push, pull_request]
 
 jobs:
@@ -22,12 +16,24 @@ jobs:
       - run: echo ${{ github.ref }}
       # - run: npm ci
       # - run: npm test
-      
+  
+      # - name: NPM Publish
+      #   uses: JS-DevTools/npm-publish@v1
+      #   with:
+      #     token: ${{ secrets.NPM_TOKEN }}
+
+  publish:
+    if: ${{ github.ref == 'refs/tags/' }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    steps:
       - name: NPM Publish
         uses: actions/checkout@v2.1.0
-        if: ${{ github.ref == 'refs/tags/' }}
-      - run: echo "it is tag"
-
+      - run: echo "test"
       # - name: NPM Publish
       #   uses: JS-DevTools/npm-publish@v1
       #   with:
