@@ -14,8 +14,8 @@ jobs:
       - name: Build & Test
         uses: actions/checkout@v2.1.0
       - run: npm ci
-      - run: npm test
       - run: npm build
+      - run: npm test
 
       - name: NPM Publish
         if: "contains(github.ref, 'refs/tags/')"
