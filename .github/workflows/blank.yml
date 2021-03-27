@@ -16,10 +16,16 @@ jobs:
       - run: npm ci
       - run: npm test
       
-      - name: NPM Publish
+      - name: Tag package.json
         if: "contains(github.ref, 'refs/tags/')"
-        run: |
-          echo "Test"
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+        run: | 
+          "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+          echo $RELEASE_VERSION
+
+      # - name: NPM Publish
+      #   if: "contains(github.ref, 'refs/tags/')"
+      #   run: |
+      #       echo "Test"
+      #   uses: JS-DevTools/npm-publish@v1
+      #   with:
+      #     token: ${{ secrets.NPM_TOKEN }}
