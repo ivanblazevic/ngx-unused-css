@@ -13,28 +13,15 @@ jobs:
     steps:
       - name: Build & Test
         uses: actions/checkout@v2.1.0
-      - run: echo ${{ github.ref }}
+        run: echo ${{ github.ref }}
       # - run: npm ci
       # - run: npm test
-  
-      # - name: NPM Publish
-      #   uses: JS-DevTools/npm-publish@v1
-      #   with:
-      #     token: ${{ secrets.NPM_TOKEN }}
-
-  publish:
-    if: "contains(github.ref, 'refs/tags/')"
-   # if: ${{ github.ref == 'refs/tags/' }}
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-
-    steps:
+      
       - name: NPM Publish
+        if: "contains(github.ref, 'refs/tags/')"
         uses: actions/checkout@v2.1.0
-      - run: echo "test"
+        run: echo "test"
+  
       # - name: NPM Publish
       #   uses: JS-DevTools/npm-publish@v1
       #   with:
