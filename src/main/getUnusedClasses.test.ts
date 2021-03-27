@@ -1,56 +1,51 @@
 import UnusedClasses from "./getUnusedClasses";
-import { ImportMock } from "ts-mock-imports";
-import * as findHtmlModule from "./../helpers/findHtml";
-import * as findUnusedCssMOdule from "./findUnusedCss";
+import mock = require("mock-fs");
 
-jest.mock("fs");
+import FindHtml from "./../helpers/findHtml";
+jest.mock("./../helpers/findHtml", () => jest.fn());
+
+import FindUnusedCss from "./findUnusedCss";
+jest.mock("./findUnusedCss", () => jest.fn());
+
+const mockFindUnusedCss = (returnValue: string[]) => {
+  // @ts-ignore
+  FindUnusedCss.mockImplementationOnce(() => {
+    return {
+      findUnusedCss: () => Promise.resolve(returnValue),
+    };
+  });
+};
 
 describe("GetUnusedClasses", () => {
-  const MOCK_FILE_INFO = {
-    "file.html": "file.html",
-    "file.scss": "file.scss",
-  };
+  beforeAll(() => {
+    mock({
+      "file.html": "file.html",
+      "file.scss": "file.scss",
+    });
 
-  beforeEach(() => {
-    // Set up some mocked out file info before each test
-    require("fs").__setMockFiles(MOCK_FILE_INFO);
+    // @ts-ignore
+    FindHtml.mockImplementation(() => {
+      return {
+        findHtml: () => ["file.html"],
+      };
+    });
+  });
+
+  afterAll(() => {
+    mock.restore();
   });
 
   it("should return empty array if no unused css files", async () => {
-    const promiseA = new Promise((resolutionFunc, rejectionFunc) => {
-      resolutionFunc([]);
-    });
-
-    const mockManager = ImportMock.mockClass(findHtmlModule);
-    // @ts-ignore
-    mockManager.mock("findHtml", ["file.html"]);
-
-    const mockManager2 = ImportMock.mockClass(findUnusedCssMOdule);
-    // @ts-ignore
-    mockManager2.mock("findUnusedCss", promiseA);
+    mockFindUnusedCss([]);
 
     const result = await new UnusedClasses().getUnusedClasses("");
     expect(result).toEqual([]);
-
-    ImportMock.restore();
   });
 
   it("should return only unused classes from the results", async () => {
-    const promiseA = new Promise((resolutionFunc, rejectionFunc) => {
-      resolutionFunc(["class1"]);
-    });
-
-    const mockManager = ImportMock.mockClass(findHtmlModule);
-    // @ts-ignore
-    mockManager.mock("findHtml", ["file.html"]);
-
-    const mockManager2 = ImportMock.mockClass(findUnusedCssMOdule);
-    // @ts-ignore
-    mockManager2.mock("findUnusedCss", promiseA);
+    mockFindUnusedCss(["class1"]);
 
     const result = await new UnusedClasses().getUnusedClasses("");
     expect(result).toEqual([[["class1"], "file.html"]]);
-
-    ImportMock.restore();
   });
 });

@@ -18,7 +18,9 @@ export default class UnusedClasses {
           cssPath
         );
         return [classes, htmlPath];
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       console.log(
         "Styling file for component " + htmlPath + " not found, skipping..."
@@ -41,8 +43,9 @@ export default class UnusedClasses {
 
   getUnusedClasses(projectPath: string): Promise<[[string[], string]]> {
     const list = new FindHtml().findHtml(projectPath);
-    return this.mapClasses(list).then(r => {
-      return r.filter((c=[]) => {
+
+    return this.mapClasses(list).then((r) => {
+      return r.filter((c = []) => {
         if (c[0]) {
           return c[0].length > 0;
         }
