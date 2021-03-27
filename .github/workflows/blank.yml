@@ -19,5 +19,6 @@ jobs:
     steps:
       - name: Build & Test
         run: |
-          npm ci
-          npm test
+          ls
+#          npm ci
+#          npm test
