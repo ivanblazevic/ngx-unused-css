@@ -19,10 +19,6 @@ jobs:
       
       - name: NPM Publish
         if: "contains(github.ref, 'refs/tags/')"
-        uses: actions/checkout@v2.1.0
-        run: echo "test"
-  
-      # - name: NPM Publish
-      #   uses: JS-DevTools/npm-publish@v1
-      #   with:
-      #     token: ${{ secrets.NPM_TOKEN }}
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
