@@ -23,7 +23,8 @@ jobs:
       #     token: ${{ secrets.NPM_TOKEN }}
 
   publish:
-    if: ${{ github.ref == 'refs/tags/' }}
+    if: "contains(github.ref, 'refs/tags/')"
+   # if: ${{ github.ref == 'refs/tags/' }}
     runs-on: ${{ matrix.os }}
 
     strategy:
