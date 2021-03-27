@@ -22,7 +22,8 @@ jobs:
       - run: echo ${{ github.ref }}
       # - run: npm ci
       # - run: npm test
-      - if: contains(github.ref, "refs/tags/")
+      - name: NPM Publish
+        if: contains(github.ref, "refs/tags/")
           echo "it is tag"
 
       # - name: NPM Publish
