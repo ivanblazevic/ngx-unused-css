@@ -22,10 +22,10 @@ jobs:
       - run: echo ${{ github.ref }}
       # - run: npm ci
       # - run: npm test
-      - name: NPM Publish
-        uses: actions/checkout@v2.1.0
+      
         if: ${{ github.ref == 'refs/tags/' }}
           echo "it is tag"
+      - name: NPM Publish
 
       # - name: NPM Publish
       #   uses: JS-DevTools/npm-publish@v1
