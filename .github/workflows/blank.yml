@@ -24,7 +24,7 @@ jobs:
       # - run: npm test
       - name: NPM Publish
         uses: actions/checkout@v2.1.0
-        if: contains(github.ref, "refs/tags/")
+        if: contains(github.ref, 'refs/tags/')
           echo "it is tag"
 
       # - name: NPM Publish
