@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-tabs */
 
 /*
 Find unused css inside Angular components
@@ -9,6 +10,7 @@ const path = require('path');
 const fs = require('fs');
 const meow = require('meow');
 const defaultConfigPath = '.ngx-unused-css.json';
+
 const cli = meow(
   `
 	Usage
@@ -30,15 +32,16 @@ const cli = meow(
   }
 );
 
-let config: Config = {
-  path: 'src/app',
-  ignore: []
-};
+let config: Config;
 
 if (cli.flags.config) {
-  config = require(__dirname + '/.' + cli.flags.config);
+  config = require(path.join(__dirname, cli.flags.config));
 } else if (fs.existsSync(path.resolve(defaultConfigPath))) {
   config = require(path.resolve(defaultConfigPath));
+}
+
+if (!config) {
+  throw new Error('Config not found, did you forgot to run ngx-unused-css --init?');
 }
 
 export const conf = config;
