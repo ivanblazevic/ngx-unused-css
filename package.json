@@ -9,7 +9,8 @@
     "lint": "eslint --ext .ts src/**",
     "lint:fix": "eslint --fix --ext .ts src/**",
     "test": "jest src/**",
-    "e2e": "cd e2e && npm run unusedCSS",
+    "e2e": "jest e2e/test.ts",
+    "e2e:run": "cd e2e && npm run unusedCSS",
     "prepare": "husky install"
   },
   "keywords": [
