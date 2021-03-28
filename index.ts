@@ -44,8 +44,6 @@ async function start () {
   });
 }
 
-console.log("cli.flags", cli.flags)
-
 if (cli.flags.init) {
   init();
 } else {
