@@ -25,11 +25,11 @@ export default class FindUnusedCss {
         content: [
           {
             raw: html,
-            extension: "html"
-          }
+            extension: "html",
+          },
         ],
         css: [{ raw: css }],
-        rejected: true
+        rejected: true,
       };
 
       const purgecssResult = await new PurgeCSS().purge(options);
