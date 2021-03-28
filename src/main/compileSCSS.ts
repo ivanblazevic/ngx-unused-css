@@ -1,6 +1,6 @@
 import sass from "sass";
+import path from "path";
 import { conf } from "../..";
-const path = require("path");
 
 /**
  * Resolve tilda relative importes from node_modules
@@ -21,7 +21,7 @@ function compileSCSS(cssPath) {
   var result = sass.renderSync({
     file: cssPath,
     importer: [importer, conf.importer],
-    includePaths: conf.includePaths
+    includePaths: conf.includePaths,
   });
   return result.css.toString();
 }

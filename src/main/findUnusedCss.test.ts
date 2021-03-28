@@ -7,6 +7,7 @@ import parseNgClass from "./../helpers/parseNgClass";
 jest.mock("./../helpers/parseNgClass", () => jest.fn());
 
 import whitelist from "./../helpers/whitelist";
+import findUnusedCss from "./findUnusedCss";
 jest.mock("./../helpers/whitelist", () => jest.fn());
 
 describe("FindUnusedCss", () => {
@@ -26,10 +27,7 @@ describe("FindUnusedCss", () => {
       return classes; // proxy classes to the result, whitelist has separate unit test
     });
 
-    const result = await new FindUnusedCss().findUnusedCss(
-      "content",
-      "cssPath"
-    );
+    const result = await findUnusedCss("content", "cssPath");
 
     expect(result).toEqual([".test-class", "span"]);
   });

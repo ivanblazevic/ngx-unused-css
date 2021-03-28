@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
 //source: https://gist.github.com/victorsollozzo/4134793
 export default class FindHTML {
@@ -16,7 +16,7 @@ export default class FindHTML {
     result = result || [];
     ext = "html";
 
-    files.forEach(file => {
+    files.forEach((file) => {
       let newbase = path.join(base, file);
       if (fs.statSync(newbase).isDirectory()) {
         result = this.findHtml(

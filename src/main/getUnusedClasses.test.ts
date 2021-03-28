@@ -1,18 +1,16 @@
 import UnusedClasses from "./getUnusedClasses";
-import mock = require("mock-fs");
+import mock from "mock-fs";
 
 import FindHtml from "./../helpers/findHtml";
 jest.mock("./../helpers/findHtml", () => jest.fn());
 
-import FindUnusedCss from "./findUnusedCss";
+import findUnusedCss from "./findUnusedCss";
 jest.mock("./findUnusedCss", () => jest.fn());
 
 const mockFindUnusedCss = (returnValue: string[]) => {
   // @ts-ignore
-  FindUnusedCss.mockImplementationOnce(() => {
-    return {
-      findUnusedCss: () => Promise.resolve(returnValue),
-    };
+  findUnusedCss.mockImplementationOnce(() => {
+    return Promise.resolve(returnValue);
   });
 };
 

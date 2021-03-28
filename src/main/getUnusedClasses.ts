@@ -1,7 +1,6 @@
 import FindHtml from "./../helpers/findHtml";
-import FindUnusedCss from "./findUnusedCss";
-const fs = require("fs");
-
+import findUnusedCss from "./findUnusedCss";
+import fs from "fs";
 export default class UnusedClasses {
   private allHtmlContent = "";
 
@@ -13,10 +12,7 @@ export default class UnusedClasses {
     try {
       fs.readFileSync(cssPath);
       try {
-        const classes = await new FindUnusedCss().findUnusedCss(
-          htmlContent,
-          cssPath
-        );
+        const classes = await findUnusedCss(htmlContent, cssPath);
         return [classes, htmlPath];
       } catch (error) {
         console.log(error);
@@ -54,10 +50,7 @@ export default class UnusedClasses {
   }
 
   getGlobalUnusedClasses(globalStyles: string) {
-    const classes = new FindUnusedCss().findUnusedCss(
-      this.allHtmlContent,
-      globalStyles
-    );
+    const classes = findUnusedCss(this.allHtmlContent, globalStyles);
     return classes;
   }
 }
