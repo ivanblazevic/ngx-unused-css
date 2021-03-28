@@ -1,36 +1,41 @@
-const fs = require("fs");
-const path = require("path");
+import fs from 'fs'
+import path from 'path'
 
-//source: https://gist.github.com/victorsollozzo/4134793
-export default class FindHTML {
-  findHtml = (
-    base: string,
-    ext?: string,
-    files?: any,
-    result?: any
-  ): string[] => {
-    if (!base) {
-      return [];
-    }
-    files = files || fs.readdirSync(base);
-    result = result || [];
-    ext = "html";
+// source: https://gist.github.com/victorsollozzo/4134793
 
-    files.forEach(file => {
-      let newbase = path.join(base, file);
-      if (fs.statSync(newbase).isDirectory()) {
-        result = this.findHtml(
-          newbase,
-          "html",
-          fs.readdirSync(newbase),
-          result
-        );
-      } else {
-        if (file.substr(-1 * (ext.length + 1)) == "." + ext) {
-          result.push(newbase);
-        }
+/**
+ * Find all htmls in the project
+ *
+ * @param base
+ * @param ext
+ * @param files
+ * @param result
+ * @returns
+ */
+function findHtml (
+  base: string,
+  ext?: string,
+  files?: string[],
+  result?: string[]
+): string[] {
+  if (!base) {
+    return []
+  }
+  files = files || fs.readdirSync(base)
+  result = result || []
+  ext = 'html'
+
+  files.forEach((file) => {
+    const newbase = path.join(base, file)
+    if (fs.statSync(newbase).isDirectory()) {
+      result = findHtml(newbase, 'html', fs.readdirSync(newbase), result)
+    } else {
+      if (file.substr(-1 * (ext.length + 1)) === '.' + ext) {
+        result.push(newbase)
       }
-    });
-    return result;
-  };
+    }
+  })
+  return result
 }
+
+export default findHtml

@@ -1,14 +1,18 @@
-#!/usr/bin/env node
+#! /usr/bin/env node
+/* eslint-disable no-tabs */
 
 /*
 Find unused css inside Angular components
 */
-//import Main from "./src/main";
-import { Config } from "./src/config";
-const path = require("path");
-const fs = require("fs");
-const meow = require("meow");
-const defaultConfigPath = ".ngx-unused-css.json";
+// import Main from "./src/main";
+import { Config } from './src/config';
+import init from './src/init';
+
+const path = require('path');
+const fs = require('fs');
+const meow = require('meow');
+const defaultConfigPath = '.ngx-unused-css.json';
+
 const cli = meow(
   `
 	Usage
@@ -23,36 +27,41 @@ const cli = meow(
   {
     flags: {
       config: {
-        type: "string",
-        alias: "c"
+        type: 'string',
+        alias: 'c'
       }
     }
   }
 );
 
-let config: Config = {
-  path: "src/app",
-  ignore: []
-};
-
-if (cli.flags.config) {
-  config = require(__dirname + "/." + cli.flags.config);
-} else if (fs.existsSync(path.resolve(defaultConfigPath))) {
-  config = require(path.resolve(defaultConfigPath));
-}
-
-export const conf = config;
-
-export function getConfig() {
-  return config;
-}
+let config: Config;
 
 // Use dynamic import so config is initialized on every import
-async function start() {
-  const mainPromise = import("./src/main");
+async function start () {
+  const mainPromise = import('./src/main');
   mainPromise.then(res => {
     new res.default();
   });
 }
 
-start();
+if (cli.flags.init) {
+  init();
+} else {
+  if (cli.flags.config) {
+    config = require(path.join(__dirname, cli.flags.config));
+  } else if (fs.existsSync(path.resolve(defaultConfigPath))) {
+    config = require(path.resolve(defaultConfigPath));
+  }
+
+  if (!config) {
+    throw new Error('Config not found, did you forgot to run ngx-unused-css --init?');
+  }
+
+  start();
+}
+
+export const conf = config;
+
+export function getConfig () {
+  return config;
+}

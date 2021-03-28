@@ -1,60 +1,40 @@
-import FindHtml from "./../helpers/findHtml";
-import FindUnusedCss from "./findUnusedCss";
-const fs = require("fs");
-
+import fs from 'fs';
+import { conf } from '../..';
+import unusedClassMapper from '../helpers/unusedClassMapper';
+import findHtml from './../helpers/findHtml';
+import findUnusedCss from './findUnusedCss';
 export default class UnusedClasses {
-  private allHtmlContent = "";
+  private allHtmlContent = '';
 
-  async unusedClassMapper(
-    cssPath: string,
-    htmlContent: string,
-    htmlPath: string
-  ) {
-    try {
-      fs.readFileSync(cssPath);
-      try {
-        const classes = await new FindUnusedCss().findUnusedCss(
-          htmlContent,
-          cssPath
-        );
-        return [classes, htmlPath];
-      } catch (error) {}
-    } catch (error) {
-      console.log(
-        "Styling file for component " + htmlPath + " not found, skipping..."
-      );
-    }
-  }
+  getUnusedClasses (projectPath: string): Promise<[[string[], string]]> {
+    const list = findHtml(projectPath);
 
-  mapClasses(list: any) {
-    const promiseArray = list.map((element) => {
-      const htmlPath = element;
-      const htmlContent = fs.readFileSync(htmlPath, "utf8");
-      const cssPath = htmlPath.replace(".html", ".scss"); // same path as html but css means it is component
-
-      this.allHtmlContent += htmlContent;
-
-      return this.unusedClassMapper(cssPath, htmlContent, htmlPath);
-    });
-    return Promise.all(promiseArray);
-  }
-
-  getUnusedClasses(projectPath: string): Promise<[[string[], string]]> {
-    const list = new FindHtml().findHtml(projectPath);
-    return this.mapClasses(list).then(r => {
-      return r.filter((c=[]) => {
-        if (c[0]) {
-          return c[0].length > 0;
-        }
+    return this.mapClasses(list).then((r) => {
+      return r.filter((c) => {
+        const [unusedCssClasses] = c;
+        return unusedCssClasses && unusedCssClasses.length > 0
       });
     }) as Promise<[[string[], string]]>;
   }
 
-  getGlobalUnusedClasses(globalStyles: string) {
-    const classes = new FindUnusedCss().findUnusedCss(
-      this.allHtmlContent,
-      globalStyles
-    );
+  getGlobalUnusedClasses (globalStyles: string) {
+    const classes = findUnusedCss(this.allHtmlContent, globalStyles);
     return classes;
+  }
+
+  private mapClasses (list: string[]) {
+    const promiseArray = list.map((element) => {
+      const htmlPath = element;
+      const htmlContent = fs.readFileSync(htmlPath, 'utf8');
+
+      // Expect same path as the template exept different extension.
+      // If styleExt not provided in the config default to .scss
+      const cssPath = htmlPath.replace('.html', conf && conf.styleExt ? conf.styleExt : '.scss');
+
+      this.allHtmlContent += htmlContent;
+
+      return unusedClassMapper(cssPath, htmlContent, htmlPath);
+    });
+    return Promise.all(promiseArray);
   }
 }

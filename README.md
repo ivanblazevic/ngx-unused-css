@@ -5,9 +5,23 @@
 
 # Angular unused css detection
 
-## TLDR: Simple example can be found here: https://github.com/ivanblazevic/ngx-unused-css/tree/master/examples/simpleAngularApp
+## Quick setup
 
-How does it works:
+`npx ngx-unused-css --init`
+
+`npm i -D ngx-unused-css`
+
+Add script into `package.json` and run it:
+
+`
+  "scripts": {
+    ...
+    "unused-css": "ngx-unused-css"
+    ...
+  }
+`
+
+## How does it works
 
 - it finds all `.html` files inside the project and then pairs it with their styling files;
   e.g. app.component.html > app.component.scss
@@ -45,6 +59,13 @@ _Optionally, override config path with CLI param: `ngx-unused-css --config=other
 - Default: `null`
 
 Path to a project, for Angular it is usually `src/app`
+
+### styleExt
+
+- Type: `String`
+- Default: `.scss`
+
+Styling extension used in the project, options are: `scss | sass | css`
 
 ### globalStyles
 
