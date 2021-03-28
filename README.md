@@ -8,6 +8,7 @@
 ## Quick setup
 
 `npx ngx-unused-css --init`
+
 `npm i -D ngx-unused-css`
 
 Add script into `package.json` and run it:
