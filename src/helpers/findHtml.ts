@@ -2,6 +2,16 @@ import fs from 'fs'
 import path from 'path'
 
 // source: https://gist.github.com/victorsollozzo/4134793
+
+/**
+ * Find all htmls in the project
+ *
+ * @param base
+ * @param ext
+ * @param files
+ * @param result
+ * @returns
+ */
 function findHtml (
   base: string,
   ext?: string,

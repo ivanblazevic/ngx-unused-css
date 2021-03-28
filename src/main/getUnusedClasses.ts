@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { conf } from '../..';
 import unusedClassMapper from '../helpers/unusedClassMapper';
 import findHtml from './../helpers/findHtml';
 import findUnusedCss from './findUnusedCss';
@@ -25,7 +26,10 @@ export default class UnusedClasses {
     const promiseArray = list.map((element) => {
       const htmlPath = element;
       const htmlContent = fs.readFileSync(htmlPath, 'utf8');
-      const cssPath = htmlPath.replace('.html', '.scss'); // same path as html but css means it is component
+
+      // Expect same path as the template exept different extension.
+      // If styleExt not provided in the config default to .scss
+      const cssPath = htmlPath.replace('.html', conf && conf.styleExt ? conf.styleExt : '.scss');
 
       this.allHtmlContent += htmlContent;
 

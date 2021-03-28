@@ -1,5 +1,5 @@
 {
-  "path": "examples/simpleAngularApp/src/app",
+  "path": "e2e/src/app",
   "ignore": [
     "ng-star",
     {
@@ -7,5 +7,5 @@
       "selectors": [".unused-to-ignore"]
     }
   ],
-  "globalStyles": "examples/simpleAngularApp/src/styles.scss"
+  "globalStyles": "e2e/src/styles.scss"
 }

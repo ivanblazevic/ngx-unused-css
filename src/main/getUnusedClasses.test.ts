@@ -1,11 +1,11 @@
-import UnusedClasses from './getUnusedClasses'
 import mock from 'mock-fs'
-
 import findHtml from './../helpers/findHtml'
-
 import findUnusedCss from './findUnusedCss'
+import UnusedClasses from './getUnusedClasses'
+
 jest.mock('./../helpers/findHtml', () => jest.fn())
 jest.mock('./findUnusedCss', () => jest.fn())
+jest.mock('../..', () => jest.fn())
 
 const mockFindUnusedCss = (returnValue: string[]) => {
   // @ts-ignore
