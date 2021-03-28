@@ -14,8 +14,8 @@ jobs:
       - name: Build & Test
         uses: actions/checkout@v2.1.0
       - run: npm audit --audit-level=moderate
+      - run: npm ci
       - run: npm run lint
-      - run: npm install
       - run: npm run build
       - run: npm test
 
