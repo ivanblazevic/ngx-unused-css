@@ -13,5 +13,6 @@ module.exports = {
   plugins: ["@typescript-eslint"],
   rules: {
     semi: 0,
+    "@typescript-eslint/no-explicit-any": 2,
   },
 };
