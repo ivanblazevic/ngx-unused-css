@@ -4,8 +4,8 @@
  * @param { Array<string> } a - Array of strings
  */
 function combine (a: string[]) {
-  var fn = function (n, src, got, all) {
-    if (n == 0) {
+  const fn = function (n, src, got, all) {
+    if (n === 0) {
       if (got.length > 0) {
         all[all.length] = got
       }

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "tsc -w",
     "build": "tsc",
-    "lint": "eslint --fix --ext .ts src/**",
+    "lint": "eslint --ext .ts src/**",
+    "lint:fix": "eslint --fix --ext .ts src/**",
     "test": "jest src/**",
     "prepare": "husky install"
   },

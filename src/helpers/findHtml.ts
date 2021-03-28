@@ -20,7 +20,7 @@ function findHtml (
     if (fs.statSync(newbase).isDirectory()) {
       result = findHtml(newbase, 'html', fs.readdirSync(newbase), result)
     } else {
-      if (file.substr(-1 * (ext.length + 1)) == '.' + ext) {
+      if (file.substr(-1 * (ext.length + 1)) === '.' + ext) {
         result.push(newbase)
       }
     }
