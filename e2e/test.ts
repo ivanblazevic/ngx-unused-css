@@ -1,11 +1,22 @@
-import { execSync } from 'child_process';
+import { spawn } from 'child_process';
 
 describe('e2e', () => {
-  it('should throw error with the list of unused css classes', () => {
-    try {
-      execSync('node dist/index')
-    } catch (error) {
-      expect(error).toMatchSnapshot()
-    }
+  it('should throw error with the list of unused css classes', (done) => {
+    const reverse = spawn('node', [
+      'dist/index'
+
+    ]);
+
+    const chunks = [];
+
+    reverse.stdout.on('data', (chunk) => {
+      chunks.push(chunk);
+    });
+
+    reverse.stdout.on('end', () => {
+      const output = Buffer.concat(chunks).toString();
+      expect(output).toMatchSnapshot()
+      done();
+    });
   })
 })

@@ -1,6 +1,6 @@
-import { conf } from './../index'
 import chalk from 'chalk'
 import { table } from 'table'
+import { conf } from './../index'
 import UnusedClasses from './main/getUnusedClasses'
 
 class Main {
@@ -27,10 +27,6 @@ class Main {
   }
 
   private log (classes: [[string[], string]]) {
-    console.error(
-      chalk.blue.bold('Unused CSS classes were found for the following files')
-    )
-
     let result = ''
 
     classes.forEach((e: [string[], string]) => {
@@ -45,7 +41,12 @@ class Main {
       result += table([[chalk.green(cssClasses)]])
     })
 
-    throw new Error('Unused CSS classes found:\n' + result)
+    console.log(
+      chalk.red.bold('Unused CSS classes were found for the following files:\n')
+    )
+
+    console.log(result);
+    process.exit(1);
   }
 }
 

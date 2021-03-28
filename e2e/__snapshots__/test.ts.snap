@@ -1,9 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`e2e should throw error with the list of unused css classes 1`] = `
-[Error: Command failed: node dist/index
-Unused CSS classes were found for the following files
-Error: Unused CSS classes found:
+"Unused CSS classes were found for the following files:
+
 e2e/src/app/app.component.html
 e2e/src/app/app.component.scss
 ╔═════════╗
@@ -15,7 +14,5 @@ e2e/src/app/app.component.scss
 ║ .i-am-global-class ║
 ╚════════════════════╝
 
-    at Main.log (/Users/blazh/Documents/GitHub/ngx-unused-css/dist/src/main.js:42:15)
-    at /Users/blazh/Documents/GitHub/ngx-unused-css/dist/src/main.js:20:31
-]
+"
 `;
