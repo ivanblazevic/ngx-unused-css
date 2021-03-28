@@ -8,7 +8,7 @@ import whitelist from "../helpers/whitelist";
  * @param {string} content
  * @param {string} cssPath
  */
-export default async function findUnusedCss(content: string, cssPath: string) {
+async function findUnusedCss(content: string, cssPath: string) {
   let css = "";
   try {
     if (!cssPath) return;
@@ -39,3 +39,5 @@ export default async function findUnusedCss(content: string, cssPath: string) {
     console.error(error);
   }
 }
+
+export default findUnusedCss;

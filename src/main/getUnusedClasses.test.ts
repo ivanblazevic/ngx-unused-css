@@ -1,7 +1,7 @@
 import UnusedClasses from "./getUnusedClasses";
 import mock from "mock-fs";
 
-import FindHtml from "./../helpers/findHtml";
+import findHtml from "./../helpers/findHtml";
 jest.mock("./../helpers/findHtml", () => jest.fn());
 
 import findUnusedCss from "./findUnusedCss";
@@ -22,10 +22,8 @@ describe("GetUnusedClasses", () => {
     });
 
     // @ts-ignore
-    FindHtml.mockImplementation(() => {
-      return {
-        findHtml: () => ["file.html"],
-      };
+    findHtml.mockImplementation(() => {
+      return ["file.html"];
     });
   });
 
