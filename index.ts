@@ -6,6 +6,8 @@ Find unused css inside Angular components
 */
 // import Main from "./src/main";
 import { Config } from './src/config';
+import init from './src/init';
+
 const path = require('path');
 const fs = require('fs');
 const meow = require('meow');
@@ -34,22 +36,6 @@ const cli = meow(
 
 let config: Config;
 
-if (cli.flags.config) {
-  config = require(path.join(__dirname, cli.flags.config));
-} else if (fs.existsSync(path.resolve(defaultConfigPath))) {
-  config = require(path.resolve(defaultConfigPath));
-}
-
-if (!config) {
-  throw new Error('Config not found, did you forgot to run ngx-unused-css --init?');
-}
-
-export const conf = config;
-
-export function getConfig () {
-  return config;
-}
-
 // Use dynamic import so config is initialized on every import
 async function start () {
   const mainPromise = import('./src/main');
@@ -58,4 +44,24 @@ async function start () {
   });
 }
 
-start();
+if (cli.flags.init) {
+  init();
+} else {
+  if (cli.flags.config) {
+    config = require(path.join(__dirname, cli.flags.config));
+  } else if (fs.existsSync(path.resolve(defaultConfigPath))) {
+    config = require(path.resolve(defaultConfigPath));
+  }
+
+  if (!config) {
+    throw new Error('Config not found, did you forgot to run ngx-unused-css --init?');
+  }
+
+  start();
+}
+
+export const conf = config;
+
+export function getConfig () {
+  return config;
+}

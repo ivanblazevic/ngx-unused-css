@@ -2,7 +2,7 @@
   "name": "simple-angular-app",
   "version": "0.0.0",
   "scripts": {
-    "unusedCSS": "node ./../dist/index"
-  },
-  "private": true
+    "unusedCSS": "node ./../dist/index",
+    "init": "node ./../dist/index --init"
+  }
 }
