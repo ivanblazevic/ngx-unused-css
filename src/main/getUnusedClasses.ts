@@ -9,12 +9,9 @@ export default class UnusedClasses {
     const list = findHtml(projectPath);
 
     return this.mapClasses(list).then((r) => {
-      return r.filter((c: string[]) => {
-        if (c[0]) {
-          return c[0].length > 0;
-        } else {
-          return false;
-        }
+      return r.filter((c) => {
+        const [unusedCssClasses] = c;
+        return unusedCssClasses && unusedCssClasses.length > 0
       });
     }) as Promise<[[string[], string]]>;
   }
