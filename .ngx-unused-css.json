@@ -1,8 +1,0 @@
-{
-  "path": "src/app",
-  "ignore": [
-    ".mat-"
-  ],
-  "globalStyles": "src/styles.scss",
-  "styleExt": ".css"
-}
