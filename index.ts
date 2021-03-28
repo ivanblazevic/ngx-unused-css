@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#! /usr/bin/env node
 /* eslint-disable no-tabs */
 
 /*
@@ -43,6 +43,8 @@ async function start () {
     new res.default();
   });
 }
+
+console.log("cli.flags", cli.flags)
 
 if (cli.flags.init) {
   init();

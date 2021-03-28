@@ -1,6 +1,6 @@
 {
   "name": "ngx-unused-css",
-  "version": "2.2.14-test2",
+  "version": "2.2.14-test3",
   "description": "Detect unused CSS in angular components",
   "main": "dist/index.js",
   "files": [
