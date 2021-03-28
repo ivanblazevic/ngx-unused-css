@@ -3,8 +3,7 @@ import { spawn } from 'child_process';
 describe('e2e', () => {
   it('should throw error with the list of unused css classes', (done) => {
     const reverse = spawn('node', [
-      'dist/index'
-
+      'dist/index', '--config', '../e2e/.ngx-unused-css.json'
     ]);
 
     const chunks = [];

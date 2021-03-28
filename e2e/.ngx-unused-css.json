@@ -1,6 +1,6 @@
 {
-  "path": "src/app",
-  "globalStyles": "src/styles.scss",
+  "path": "e2e/src/app",
+  "globalStyles": "e2e/src/styles.scss",
   "ignore": [
     ".mat-",
     "ng-star",
