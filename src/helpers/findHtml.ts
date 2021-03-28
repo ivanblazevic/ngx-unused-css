@@ -5,8 +5,8 @@ import path from 'path'
 function findHtml (
   base: string,
   ext?: string,
-  files?: any,
-  result?: any
+  files?: string[],
+  result?: string[]
 ): string[] {
   if (!base) {
     return []

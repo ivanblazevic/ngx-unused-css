@@ -1,10 +1,10 @@
+import fs from 'fs';
 import findHtml from './../helpers/findHtml';
 import findUnusedCss from './findUnusedCss';
-import fs from 'fs';
 export default class UnusedClasses {
   private allHtmlContent = '';
 
-  async unusedClassMapper(
+  async unusedClassMapper (
     cssPath: string,
     htmlContent: string,
     htmlPath: string
@@ -24,7 +24,7 @@ export default class UnusedClasses {
     }
   }
 
-  mapClasses(list: string[]) {
+  mapClasses (list: string[]) {
     const promiseArray = list.map((element) => {
       const htmlPath = element;
       const htmlContent = fs.readFileSync(htmlPath, 'utf8');
@@ -37,7 +37,7 @@ export default class UnusedClasses {
     return Promise.all(promiseArray);
   }
 
-  getUnusedClasses(projectPath: string): Promise<[[string[], string]]> {
+  getUnusedClasses (projectPath: string): Promise<[[string[], string]]> {
     const list = findHtml(projectPath);
 
     return this.mapClasses(list).then((r) => {
@@ -51,7 +51,7 @@ export default class UnusedClasses {
     }) as Promise<[[string[], string]]>;
   }
 
-  getGlobalUnusedClasses(globalStyles: string) {
+  getGlobalUnusedClasses (globalStyles: string) {
     const classes = findUnusedCss(this.allHtmlContent, globalStyles);
     return classes;
   }
