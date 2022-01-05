@@ -9,6 +9,6 @@ export interface Config {
   styleExt?: 'scss | sass | css';
   ignore: (string | Ignore)[];
   importer?: string;
-  includePaths?: string;
+  includePaths?: string[];
   globalStyles?: string;
 }
