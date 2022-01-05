@@ -2,17 +2,6 @@ import path from 'path';
 import sass from 'sass';
 import { conf } from '../..';
 
-/**
- * Resolve tilda relative importes from node_modules
- * @param {*} url
- */
-function importer (url: string) {
-  if (url[0] === '~') {
-    url = path.resolve('node_modules', url.substring(1))
-  }
-  return new URL(url);
-}
-
 // TODO: return feature back
 // conf.importer
 
