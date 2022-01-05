@@ -27,6 +27,7 @@
   "author": "Ivan Blazevic",
   "license": "ISC",
   "dependencies": {
+    "@types/sass": "^1.43.1",
     "chalk": "5.0.0",
     "jsdom": "19.0.0",
     "meow": "10.1.2",
