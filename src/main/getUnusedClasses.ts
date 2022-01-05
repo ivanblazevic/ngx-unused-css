@@ -11,7 +11,7 @@ export default class UnusedClasses {
 
     return this.mapClasses(list).then((r) => {
       return r.filter((c) => {
-        const [unusedCssClasses] = c;
+        const unusedCssClasses: string[] | string = c?.length ? c[0] : [];
         return unusedCssClasses && unusedCssClasses.length > 0
       });
     }) as Promise<[[string[], string]]>;
