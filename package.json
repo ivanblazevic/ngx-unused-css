@@ -17,6 +17,9 @@
     "e2e:init": "node dist/index --init",
     "prepare": "husky install"
   },
+  "resolutions": {
+    "ansi-regex": "5.0.1"
+  },
   "keywords": [
     "angular",
     "unused",
