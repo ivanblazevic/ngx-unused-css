@@ -1,0 +1,13 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "ngx-unused-css --config ../e2e/.ngx-unused-css.manual.json"
+  },
+  "author": "",
+  "license": "ISC"
+}
