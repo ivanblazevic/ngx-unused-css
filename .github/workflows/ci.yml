@@ -20,3 +20,9 @@ jobs:
       - run: npm run build
       - run: npm test
       - run: npm run e2e
+
+      - name: NPM Publish
+      #  if: "contains(github.ref, 'refs/tags/')"
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
