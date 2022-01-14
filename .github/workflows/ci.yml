@@ -4,19 +4,18 @@ on: [push]
 
 jobs:
   build:
-    name: Node.js ${{ matrix.node-version }}
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
-        node-version:
-          - 12
-          - 14
-          - 16
-
+        node: [ '12', '14', '16' ]
+    name: Node.js ${{ matrix.node }}
     steps:
       - name: Build & Test
         uses: actions/checkout@v2.1.0
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
       # Temporarily disabled until problem with type:module has been resolved
       # - run: npm audit --audit-level=moderate
       - run: npm ci
