@@ -1,5 +1,6 @@
 import path from 'path';
 import sass from 'sass';
+import getConfig from '../../index';
 
 // TODO: return feature back
 // conf.importer
@@ -20,7 +21,7 @@ function compileSCSS(cssPath) {
         }
       }
     ],
-    loadPaths: conf.includePaths
+    loadPaths: getConfig().includePaths
   });
   return result.css.toString();
 }
