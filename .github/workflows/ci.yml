@@ -4,11 +4,15 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-
+    name: Node.js ${{ matrix.node-version }}
+    runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        node-version:
+          - 12
+          - 14
+          - 16
 
     steps:
       - name: Build & Test
