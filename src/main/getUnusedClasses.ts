@@ -1,35 +1,39 @@
 import fs from 'fs';
-import { conf } from '../..';
 import unusedClassMapper from '../helpers/unusedClassMapper';
 import findHtml from './../helpers/findHtml';
 import findUnusedCss from './findUnusedCss';
+
 export default class UnusedClasses {
   private allHtmlContent = '';
+  private styleExtension: string;
 
-  getUnusedClasses (projectPath: string): Promise<[[string[], string]]> {
+  constructor(private _styleExtension: string) {
+    this.styleExtension = _styleExtension;
+  }
+
+  getUnusedClasses(projectPath: string): Promise<[[string[], string]]> {
     const list = findHtml(projectPath);
 
     return this.mapClasses(list).then((r) => {
       return r.filter((c) => {
         const unusedCssClasses: string[] | string = c?.length ? c[0] : [];
-        return unusedCssClasses && unusedCssClasses.length > 0
+        return unusedCssClasses && unusedCssClasses.length > 0;
       });
     }) as Promise<[[string[], string]]>;
   }
 
-  getGlobalUnusedClasses (globalStyles: string) {
+  getGlobalUnusedClasses(globalStyles: string) {
     const classes = findUnusedCss(this.allHtmlContent, globalStyles);
     return classes;
   }
 
-  private mapClasses (list: string[]) {
+  private mapClasses(list: string[]) {
     const promiseArray = list.map((element) => {
       const htmlPath = element;
       const htmlContent = fs.readFileSync(htmlPath, 'utf8');
 
-      // Expect same path as the template exept different extension.
-      // If styleExt not provided in the config default to .scss
-      const cssPath = htmlPath.replace('.html', conf && conf.styleExt ? conf.styleExt : '.scss');
+      // Expect same path as the template except different extension.
+      const cssPath = htmlPath.replace('.html', this.styleExtension);
 
       this.allHtmlContent += htmlContent;
 

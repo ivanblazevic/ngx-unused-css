@@ -1,11 +1,12 @@
-import chalk from 'chalk'
-import { table } from 'table'
-import { conf } from './../index'
-import UnusedClasses from './main/getUnusedClasses'
+import chalk from 'chalk';
+import { table } from 'table';
+import getConfig from './../index';
+import UnusedClasses from './main/getUnusedClasses';
 
 class Main {
   constructor () {
-    const unusedClasses = new UnusedClasses()
+    const conf = getConfig();
+    const unusedClasses = new UnusedClasses(conf.styleExt || '.scss')
 
     unusedClasses.getUnusedClasses(conf.path).then((res) => {
       if (conf.globalStyles) {

@@ -37,9 +37,9 @@ const cli = meow(
 let config: Config;
 
 // Use dynamic import so config is initialized on every import
-async function start () {
+async function start() {
   const mainPromise = import('./src/main');
-  mainPromise.then(res => {
+  mainPromise.then((res) => {
     new res.default();
   });
 }
@@ -54,14 +54,14 @@ if (cli.flags.init) {
   }
 
   if (!config) {
-    throw new Error('Config not found, did you forgot to run ngx-unused-css --init?');
+    throw new Error(
+      'Config not found, did you forgot to run ngx-unused-css --init?'
+    );
   }
 
   start();
 }
 
-export const conf = config;
-
-export function getConfig () {
+export default function getConfig(): Config {
   return config;
 }

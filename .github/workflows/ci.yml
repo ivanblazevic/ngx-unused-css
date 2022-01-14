@@ -1,0 +1,25 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [ '12', '14', '16' ]
+    name: Node.js ${{ matrix.node }}
+    steps:
+      - name: Build & Test
+        uses: actions/checkout@v2.1.0
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      # Temporarily disabled until problem with type:module has been resolved
+      # - run: npm audit --audit-level=moderate
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      - run: npm test
+      - run: npm run e2e

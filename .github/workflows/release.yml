@@ -1,0 +1,27 @@
+name: Release
+
+on:
+  push:
+    tags:        
+      - "*"
+
+jobs:
+  build:
+    name: Node.js ${{ matrix.node-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version:
+          - 12
+
+    steps:
+      - name: Build & Publish
+        uses: actions/checkout@v2.1.0
+      - run: npm ci
+      - run: npm run build
+
+      - name: NPM Publish
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
