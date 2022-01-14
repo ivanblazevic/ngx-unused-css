@@ -5,8 +5,11 @@ import findUnusedCss from './findUnusedCss';
 
 export default class UnusedClasses {
   private allHtmlContent = '';
+  private styleExtension: string;
 
-  constructor(private styleExtension: string) {}
+  constructor(private _styleExtension: string) {
+    this.styleExtension = _styleExtension;
+  }
 
   getUnusedClasses(projectPath: string): Promise<[[string[], string]]> {
     const list = findHtml(projectPath);
