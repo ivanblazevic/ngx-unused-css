@@ -1,10 +1,12 @@
 import fs from 'fs';
-import { conf } from '../..';
 import unusedClassMapper from '../helpers/unusedClassMapper';
 import findHtml from './../helpers/findHtml';
 import findUnusedCss from './findUnusedCss';
+
 export default class UnusedClasses {
   private allHtmlContent = '';
+  
+  constructor(private styleExtension: string) {}
 
   getUnusedClasses (projectPath: string): Promise<[[string[], string]]> {
     const list = findHtml(projectPath);
@@ -27,9 +29,8 @@ export default class UnusedClasses {
       const htmlPath = element;
       const htmlContent = fs.readFileSync(htmlPath, 'utf8');
 
-      // Expect same path as the template exept different extension.
-      // If styleExt not provided in the config default to .scss
-      const cssPath = htmlPath.replace('.html', conf && conf.styleExt ? conf.styleExt : '.scss');
+      // Expect same path as the template except different extension.
+      const cssPath = htmlPath.replace('.html', this.styleExtension);
 
       this.allHtmlContent += htmlContent;
 

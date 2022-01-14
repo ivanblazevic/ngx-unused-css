@@ -47,10 +47,11 @@ async function start () {
 if (cli.flags.init) {
   init();
 } else {
+
   if (cli.flags.config) {
     config = require(path.join(__dirname, cli.flags.config));
-  } else if (fs.existsSync(path.resolve(defaultConfigPath))) {
-    config = require(path.resolve(defaultConfigPath));
+  } else if (fs.existsSync(path.resolve(path.join(__dirname, defaultConfigPath)))) {
+    config = require(path.join(__dirname, defaultConfigPath));
   }
 
   if (!config) {
@@ -60,8 +61,6 @@ if (cli.flags.init) {
   start();
 }
 
-export const conf = config;
-
-export function getConfig () {
+export default function getConfig(): Config {
   return config;
 }
