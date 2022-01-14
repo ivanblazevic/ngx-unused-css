@@ -1,47 +1,47 @@
-import mock from 'mock-fs'
-import findHtml from './../helpers/findHtml'
-import findUnusedCss from './findUnusedCss'
-import UnusedClasses from './getUnusedClasses'
+import mock from 'mock-fs';
+import findHtml from './../helpers/findHtml';
+import findUnusedCss from './findUnusedCss';
+import UnusedClasses from './getUnusedClasses';
 
-jest.mock('./../helpers/findHtml', () => jest.fn())
-jest.mock('./findUnusedCss', () => jest.fn())
-jest.mock('../..', () => jest.fn())
+jest.mock('./../helpers/findHtml', () => jest.fn());
+jest.mock('./findUnusedCss', () => jest.fn());
+jest.mock('../..', () => jest.fn());
 
 const mockFindUnusedCss = (returnValue: string[]) => {
   // @ts-ignore
   findUnusedCss.mockImplementationOnce(() => {
-    return Promise.resolve(returnValue)
-  })
-}
+    return Promise.resolve(returnValue);
+  });
+};
 
 describe('GetUnusedClasses', () => {
   beforeAll(() => {
     mock({
       'file.html': 'file.html',
       'file.scss': 'file.scss'
-    })
+    });
 
     // @ts-ignore
     findHtml.mockImplementation(() => {
-      return ['file.html']
-    })
-  })
+      return ['file.html'];
+    });
+  });
 
   afterAll(() => {
-    mock.restore()
-  })
+    mock.restore();
+  });
 
   it('should return empty array if no unused css files', async () => {
-    mockFindUnusedCss([])
+    mockFindUnusedCss([]);
 
-    const result = await new UnusedClasses().getUnusedClasses('')
-    expect(result).toEqual([])
-  })
+    const result = await new UnusedClasses('.scss').getUnusedClasses('');
+    expect(result).toEqual([]);
+  });
 
   it('should return only unused classes from the results', async () => {
-    mockFindUnusedCss(['class1'])
+    mockFindUnusedCss(['class1']);
 
-    const result = await new UnusedClasses().getUnusedClasses('')
-    expect(result).toEqual([[['class1'], 'file.html']])
-  })
-})
+    const result = await new UnusedClasses('.scss').getUnusedClasses('');
+    expect(result).toEqual([[['class1'], 'file.html']]);
+  });
+});

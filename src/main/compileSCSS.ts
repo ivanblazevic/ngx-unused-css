@@ -1,6 +1,6 @@
-import sass from 'sass'
 import path from 'path'
-import { conf } from '../..'
+import sass from 'sass'
+import getConfig from '../../index'
 
 /**
  * Resolve tilda relative importes from node_modules
@@ -18,6 +18,7 @@ function importer (url: string) {
  * @param {string} cssPath
  */
 function compileSCSS (cssPath) {
+  const conf = getConfig();
   const result = sass.renderSync({
     file: cssPath,
     importer: [importer, conf.importer],

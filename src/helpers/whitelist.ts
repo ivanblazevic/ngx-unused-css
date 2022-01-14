@@ -1,8 +1,10 @@
-import { SELECTORS_TO_IGNORE } from '../constants'
-import { Ignore } from '../config'
-import { conf } from '../..'
-import { handler } from './whitelist/handler'
 import path from 'path'
+import getConfig from '../../index'
+import { Ignore } from '../config'
+import { SELECTORS_TO_IGNORE } from '../constants'
+import { handler } from './whitelist/handler'
+
+const conf = getConfig();
 
 const projectPath = conf.path
 
