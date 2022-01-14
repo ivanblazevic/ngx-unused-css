@@ -1,6 +1,6 @@
 name: CI
 
-on: [pull_request, push]
+on: [push]
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
       - run: npm run e2e
 
       - name: NPM Publish
-      #  if: "contains(github.ref, 'refs/tags/')"
+        if: "contains(github.ref, 'refs/tags/')"
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
