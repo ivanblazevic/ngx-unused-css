@@ -1,5 +1,6 @@
 import path from 'path';
 import sass from 'sass';
+import { Config } from '../config';
 
 // TODO: return feature back
 // conf.importer
@@ -8,7 +9,7 @@ import sass from 'sass';
  * Compile SCSS
  * @param {string} cssPath
  */
-export default function compileSCSS(cssPath, includePaths: string[]) {
+export default function compileSCSS(cssPath: string, config: Config): string {
   const result = sass.compile(cssPath, {
     importers: [
       {
@@ -20,7 +21,7 @@ export default function compileSCSS(cssPath, includePaths: string[]) {
         }
       }
     ],
-    loadPaths: includePaths
+    loadPaths: config.includePaths
   });
   return result.css.toString();
 }

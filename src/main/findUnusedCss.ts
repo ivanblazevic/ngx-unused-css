@@ -17,7 +17,7 @@ export default async function findUnusedCss(
   let css = '';
   try {
     if (!cssPath) return;
-    css = compileSCSS(cssPath, config.includePaths);
+    css = compileSCSS(cssPath, config);
   } catch (error) {
     console.error(error);
   }

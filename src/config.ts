@@ -1,3 +1,5 @@
+import { FileImporter, Importer } from 'sass';
+
 export interface Ignore {
   file: string;
   all?: boolean;
@@ -10,7 +12,7 @@ export interface Config {
   path: string;
   styleExt?: SupportedStyleExtensions;
   ignore: (string | Ignore)[];
-  importer?: string;
+  importer?: (Importer<'sync'> | FileImporter<'sync'>)[];
   includePaths?: string[];
   globalStyles?: string;
 }
