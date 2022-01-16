@@ -1,6 +1,5 @@
 import path from 'path';
 import sass from 'sass';
-import getConfig from '../../index';
 
 // TODO: return feature back
 // conf.importer
@@ -9,7 +8,7 @@ import getConfig from '../../index';
  * Compile SCSS
  * @param {string} cssPath
  */
-function compileSCSS(cssPath) {
+export default function compileSCSS(cssPath, includePaths: string[]) {
   const result = sass.compile(cssPath, {
     importers: [
       {
@@ -21,9 +20,7 @@ function compileSCSS(cssPath) {
         }
       }
     ],
-    loadPaths: getConfig().includePaths
+    loadPaths: includePaths
   });
   return result.css.toString();
 }
-
-export default compileSCSS;

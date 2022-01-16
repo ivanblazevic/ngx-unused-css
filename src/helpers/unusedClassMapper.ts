@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { Config } from '../config';
 import findUnusedCss from '../main/findUnusedCss';
 
 /**
@@ -9,16 +10,17 @@ import findUnusedCss from '../main/findUnusedCss';
  * @param htmlPath - html file path
  * @returns Promise<([string[], string])>
  */
-async function unusedClassMapper (
+export default async function unusedClassMapper(
   cssPath: string,
   htmlContent: string,
-  htmlPath: string
-): Promise<([string[], string])> {
+  htmlPath: string,
+  config: Config
+): Promise<[string[], string]> {
   try {
     // Try to read styling file path in order to determine if file exist
     fs.readFileSync(cssPath);
     try {
-      const classes = await findUnusedCss(htmlContent, cssPath);
+      const classes = await findUnusedCss(htmlContent, cssPath, config);
       return [classes, htmlPath];
     } catch (error) {
       console.log(error);
@@ -29,5 +31,3 @@ async function unusedClassMapper (
     );
   }
 }
-
-export default unusedClassMapper;

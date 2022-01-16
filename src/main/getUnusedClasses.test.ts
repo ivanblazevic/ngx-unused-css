@@ -1,4 +1,5 @@
 import mock from 'mock-fs';
+import { Config } from '../config';
 import findHtml from './../helpers/findHtml';
 import findUnusedCss from './findUnusedCss';
 import UnusedClasses from './getUnusedClasses';
@@ -34,14 +35,18 @@ describe('GetUnusedClasses', () => {
   it('should return empty array if no unused css files', async () => {
     mockFindUnusedCss([]);
 
-    const result = await new UnusedClasses('.scss').getUnusedClasses('');
+    const result = await new UnusedClasses({
+      styleExt: 'scss'
+    } as unknown as Config).getUnusedClasses('');
     expect(result).toEqual([]);
   });
 
   it('should return only unused classes from the results', async () => {
     mockFindUnusedCss(['class1']);
 
-    const result = await new UnusedClasses('.scss').getUnusedClasses('');
+    const result = await new UnusedClasses({
+      styleExt: 'scss'
+    } as unknown as Config).getUnusedClasses('');
     expect(result).toEqual([[['class1'], 'file.html']]);
   });
 });

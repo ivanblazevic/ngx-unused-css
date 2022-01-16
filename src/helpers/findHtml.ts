@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'fs';
+import path from 'path';
 
 // source: https://gist.github.com/victorsollozzo/4134793
 
@@ -12,30 +12,28 @@ import path from 'path'
  * @param result
  * @returns
  */
-function findHtml (
+export default function findHtml(
   base: string,
   ext?: string,
   files?: string[],
   result?: string[]
 ): string[] {
   if (!base) {
-    return []
+    return [];
   }
-  files = files || fs.readdirSync(base)
-  result = result || []
-  ext = 'html'
+  files = files || fs.readdirSync(base);
+  result = result || [];
+  ext = 'html';
 
   files.forEach((file) => {
-    const newbase = path.join(base, file)
+    const newbase = path.join(base, file);
     if (fs.statSync(newbase).isDirectory()) {
-      result = findHtml(newbase, 'html', fs.readdirSync(newbase), result)
+      result = findHtml(newbase, 'html', fs.readdirSync(newbase), result);
     } else {
       if (file.substr(-1 * (ext.length + 1)) === '.' + ext) {
-        result.push(newbase)
+        result.push(newbase);
       }
     }
-  })
-  return result
+  });
+  return result;
 }
-
-export default findHtml

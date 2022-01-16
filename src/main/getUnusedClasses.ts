@@ -1,14 +1,16 @@
 import fs from 'fs';
+import { Config } from '../config';
 import unusedClassMapper from '../helpers/unusedClassMapper';
 import findHtml from './../helpers/findHtml';
 import findUnusedCss from './findUnusedCss';
 
 export default class UnusedClasses {
   private allHtmlContent = '';
-  private styleExtension: string;
 
-  constructor(private _styleExtension: string) {
-    this.styleExtension = _styleExtension;
+  private config: Config;
+
+  constructor(private _config: Config) {
+    this.config = _config;
   }
 
   getUnusedClasses(projectPath: string): Promise<[[string[], string]]> {
@@ -23,7 +25,11 @@ export default class UnusedClasses {
   }
 
   getGlobalUnusedClasses(globalStyles: string) {
-    const classes = findUnusedCss(this.allHtmlContent, globalStyles);
+    const classes = findUnusedCss(
+      this.allHtmlContent,
+      globalStyles,
+      this.config
+    );
     return classes;
   }
 
@@ -33,11 +39,11 @@ export default class UnusedClasses {
       const htmlContent = fs.readFileSync(htmlPath, 'utf8');
 
       // Expect same path as the template except different extension.
-      const cssPath = htmlPath.replace('.html', this.styleExtension);
+      const cssPath = htmlPath.replace('.html', `.${this.config.styleExt}`);
 
       this.allHtmlContent += htmlContent;
 
-      return unusedClassMapper(cssPath, htmlContent, htmlPath);
+      return unusedClassMapper(cssPath, htmlContent, htmlPath, this.config);
     });
     return Promise.all(promiseArray);
   }

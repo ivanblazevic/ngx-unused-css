@@ -4,9 +4,11 @@ export interface Ignore {
   selectors?: string[];
 }
 
+export type SupportedStyleExtensions = 'scss' | 'sass' | 'css';
+
 export interface Config {
   path: string;
-  styleExt?: 'scss | sass | css';
+  styleExt?: SupportedStyleExtensions;
   ignore: (string | Ignore)[];
   importer?: string;
   includePaths?: string[];
