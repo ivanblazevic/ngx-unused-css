@@ -1,3 +1,5 @@
 node_modules
 .DS_Store
 dist
+# Exclude node_modules in e2e dir as we need it for testing importers
+!e2e/node_modules

@@ -32,7 +32,9 @@ class Main {
   }
 
   private log(classes: [[string[], string]]) {
-    let result = '';
+    let result = chalk.red.bold(
+      'Unused CSS classes were found for the following files:\n\n'
+    );
 
     classes.forEach((e: [string[], string]) => {
       const htmlPath = e[1];
@@ -46,11 +48,8 @@ class Main {
       result += table([[chalk.green(cssClasses)]]);
     });
 
-    console.log(
-      chalk.red.bold('Unused CSS classes were found for the following files:\n')
-    );
-
     console.log(result);
+
     process.exit(1);
   }
 }

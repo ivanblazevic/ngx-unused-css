@@ -5,6 +5,12 @@
 
 # Angular unused css detection
 
+## Breaking changes in version >= 4.0.0
+
+- sass lib has been upgraded to latest version therefore custom importer configuration needs to be changed,
+  refer to: https://sass-lang.com/documentation/js-api/interfaces/FileImporter
+- 
+
 ## Quick setup
 
 `npx ngx-unused-css --init`
@@ -76,7 +82,7 @@ Path to global styles, usally it is `src/styles.scss`
 
 ### importer
 
-Custom importer handler, more details here: https://github.com/sass/node-sass#importer--v200---experimental
+Custom importer handler, more details here: https://sass-lang.com/documentation/js-api/interfaces/FileImporter
 
 ### includePaths
 

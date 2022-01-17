@@ -1,5 +1,6 @@
 import path from 'path';
 import sass from 'sass';
+import { pathToFileURL } from 'url';
 import { Config } from '../config';
 
 // TODO: return feature back
@@ -17,11 +18,15 @@ export default function compileSCSS(cssPath: string, config: Config): string {
         // `node_modules`.
         findFileUrl(url) {
           if (!url.startsWith('~')) return null;
-          return new URL(path.resolve('node_modules', url.substring(1)));
+          return new URL(
+            path.join('node_modules', url.substring(1)),
+            pathToFileURL('node_modules')
+          );
         }
       }
     ],
     loadPaths: config.includePaths
   });
+
   return result.css.toString();
 }
