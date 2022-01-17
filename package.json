@@ -13,7 +13,6 @@
     "lint:fix": "eslint --fix --ext .ts src/**",
     "test": "jest src/**",
     "e2e": "jest e2e/test.ts",
-    "e2e:manual": "cd e2e && npm run unusedCSS",
     "e2e:init": "node dist/index --init",
     "prepare": "husky install"
   },

@@ -23,10 +23,14 @@ export default class Main {
           res.push([r.globalCss, '***** GLOBAL UNUSED CSS *****']);
         }
 
-        this.log(res);
+        if (res.length > 0) {
+          this.log(res);
+        } else {
+          console.log('No duplicate classes were found!');
+        }
       })
       .catch((err) => {
-        console.log('ERR', err);
+        throw new Error(err);
       });
   }
 

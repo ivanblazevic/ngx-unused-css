@@ -1,23 +1,16 @@
-import { spawn } from 'child_process';
+import { exec } from 'child_process';
 
 describe('e2e', () => {
   it('should throw error with the list of unused css classes', (done) => {
-    const reverse = spawn('node', [
-      'dist/index',
-      '--config',
-      '../e2e/.ngx-unused-css.json'
-    ]);
-
-    const chunks = [];
-
-    reverse.stdout.on('data', (chunk) => {
-      chunks.push(chunk);
-    });
-
-    reverse.stdout.on('end', () => {
-      const output = Buffer.concat(chunks).toString();
-      expect(output).toMatchSnapshot();
-      done();
-    });
+    exec(
+      'node ./../dist/index.js',
+      { cwd: 'e2e' },
+      function (error, stdout, stderr) {
+        if (error) {
+          expect(stdout).toMatchSnapshot();
+          done();
+        }
+      }
+    );
   });
 });
