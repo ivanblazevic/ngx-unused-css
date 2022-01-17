@@ -1,6 +1,8 @@
 import fs from 'fs';
 import { Config } from '../config';
-import unusedClassMapper from '../helpers/unusedClassMapper';
+import unusedClassMapper, {
+  UnusedClassesMap
+} from '../helpers/unusedClassMapper';
 import findHtml from './../helpers/findHtml';
 import findUnusedCss from './findUnusedCss';
 
@@ -13,27 +15,26 @@ export default class UnusedClasses {
     this.config = _config;
   }
 
-  getUnusedClasses(projectPath: string): Promise<[[string[], string]]> {
+  async getUnusedClasses(projectPath: string): Promise<UnusedClassesMap[]> {
     const list = findHtml(projectPath);
+    const result = await this.mapClasses(list);
 
-    return this.mapClasses(list).then((r) => {
-      return r.filter((c) => {
-        const unusedCssClasses: string[] | string = c?.length ? c[0] : [];
-        return unusedCssClasses && unusedCssClasses.length > 0;
-      });
-    }) as Promise<[[string[], string]]>;
+    return result.filter((c) => {
+      const unusedCssClasses: string[] | string = c?.length ? c[0] : [];
+      return unusedCssClasses && unusedCssClasses.length > 0;
+    });
   }
 
   getGlobalUnusedClasses(globalStyles: string) {
-    const classes = findUnusedCss(
-      this.allHtmlContent,
-      globalStyles,
-      this.config
-    );
-    return classes;
+    return findUnusedCss(this.allHtmlContent, globalStyles, this.config);
   }
 
-  private mapClasses(list: string[]) {
+  /**
+   *
+   * @param list List of html files to be checked
+   * @returns
+   */
+  private mapClasses(list: string[]): Promise<UnusedClassesMap[]> {
     const promiseArray = list.map((element) => {
       const htmlPath = element;
       const htmlContent = fs.readFileSync(htmlPath, 'utf8');
@@ -45,6 +46,7 @@ export default class UnusedClasses {
 
       return unusedClassMapper(cssPath, htmlContent, htmlPath, this.config);
     });
+
     return Promise.all(promiseArray);
   }
 }

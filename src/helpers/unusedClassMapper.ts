@@ -2,6 +2,9 @@ import fs from 'fs';
 import { Config } from '../config';
 import findUnusedCss from '../main/findUnusedCss';
 
+type UnusedClasses = string[]; // Return class names as array of strings
+export type UnusedClassesMap = [UnusedClasses, string]; // Second string is actual html file where unused classes were found
+
 /**
  * Returns array of classes/attributes not used in html
  *
@@ -15,7 +18,7 @@ export default async function unusedClassMapper(
   htmlContent: string,
   htmlPath: string,
   config: Config
-): Promise<[string[], string]> {
+): Promise<UnusedClassesMap> {
   try {
     // Try to read styling file path in order to determine if file exist
     fs.readFileSync(cssPath);

@@ -2,6 +2,7 @@ import chalk from 'chalk';
 import { table } from 'table';
 import { Config } from './config';
 import { DEFAULT_STYLE_EXTENSION } from './constants';
+import { UnusedClassesMap } from './helpers/unusedClassMapper';
 import UnusedClasses from './main/getUnusedClasses';
 
 class Main {
@@ -31,7 +32,7 @@ class Main {
     });
   }
 
-  private log(classes: [[string[], string]]) {
+  private log(classes: UnusedClassesMap[]) {
     let result = chalk.red.bold(
       'Unused CSS classes were found for the following files:\n\n'
     );
