@@ -5,31 +5,46 @@ import { DEFAULT_STYLE_EXTENSION } from './constants';
 import { UnusedClassesMap } from './helpers/unusedClassMapper';
 import UnusedClasses from './main/getUnusedClasses';
 
-class Main {
+export default class Main {
+  private config: Config;
+
   constructor(config: Config) {
+    this.config = config;
+
     if (!config.styleExt) {
       config.styleExt = DEFAULT_STYLE_EXTENSION;
     }
 
-    const unusedClasses = new UnusedClasses(config);
+    this.run()
+      .then((r) => {
+        const res = r.css;
 
-    unusedClasses.getUnusedClasses(config.path).then((res) => {
-      if (config.globalStyles) {
-        unusedClasses.getGlobalUnusedClasses(config.globalStyles).then((r) => {
-          if (r.length > 0) {
-            // @ts-ignore
-            res.push([r, '***** GLOBAL UNUSED CSS *****']);
-          }
-          if (res.length > 0) {
-            this.log(res);
-          }
-        });
-      } else {
-        if (res.length > 0) {
-          this.log(res);
+        if (r.globalCss.length > 0) {
+          res.push([r.globalCss, '***** GLOBAL UNUSED CSS *****']);
         }
-      }
-    });
+
+        this.log(res);
+      })
+      .catch((err) => {
+        console.log('ERR', err);
+      });
+  }
+
+  private async run(): Promise<{
+    css: UnusedClassesMap[];
+    globalCss: string[];
+  }> {
+    try {
+      const unusedClasses = new UnusedClasses(this.config);
+      const css = await unusedClasses.getUnusedClasses(this.config.path);
+      const globalCss = await unusedClasses.getGlobalUnusedClasses(
+        this.config.globalStyles
+      );
+
+      return { css, globalCss };
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   private log(classes: UnusedClassesMap[]) {
@@ -54,5 +69,3 @@ class Main {
     process.exit(1);
   }
 }
-
-export default Main;

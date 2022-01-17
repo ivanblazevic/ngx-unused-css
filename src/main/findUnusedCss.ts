@@ -15,32 +15,26 @@ export default async function findUnusedCss(
   config: Config
 ) {
   let css = '';
-  try {
-    if (!cssPath) return;
-    css = compileSCSS(cssPath, config);
-  } catch (error) {
-    console.error(error);
-  }
 
-  try {
-    const html = parseNgClass(content, cssPath);
+  if (!cssPath) return;
 
-    const options = {
-      content: [
-        {
-          raw: html,
-          extension: 'html'
-        }
-      ],
-      css: [{ raw: css }],
-      rejected: true
-    };
+  css = compileSCSS(cssPath, config);
 
-    const purgecssResult = await new PurgeCSS().purge(options);
-    const result = purgecssResult[0].rejected;
+  const html = parseNgClass(content, cssPath);
 
-    return whitelist(result, cssPath, config.ignore, config.path);
-  } catch (error) {
-    console.error(error);
-  }
+  const options = {
+    content: [
+      {
+        raw: html,
+        extension: 'html'
+      }
+    ],
+    css: [{ raw: css }],
+    rejected: true
+  };
+
+  const purgecssResult = await new PurgeCSS().purge(options);
+  const result = purgecssResult[0].rejected;
+
+  return whitelist(result, cssPath, config.ignore, config.path);
 }
