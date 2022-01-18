@@ -13,6 +13,16 @@
 
 ## Quick setup
 
+Run via API
+
+```
+import { NgxUnusedCSS } from 'ngx-unused-css';
+
+const result = new Main(config).instance.run();
+```
+
+Run via CLI
+
 `npx ngx-unused-css --init`
 
 `npm i -D ngx-unused-css`

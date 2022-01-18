@@ -5,7 +5,7 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "strict": true,
-    "declaration": false,
+    "declaration": true,
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
     "experimentalDecorators": true,

@@ -6,7 +6,7 @@ import { DEFAULT_STYLE_EXTENSION } from './constants';
 import { UnusedClassesMap } from './helpers/unusedClassMapper';
 import UnusedClasses from './main/getUnusedClasses';
 
-export default class Main {
+export class Main {
   private config: Config;
 
   constructor(config: Config) {

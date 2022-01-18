@@ -53,7 +53,10 @@ if (cli.flags.init) {
   const mainPromise = import('./src/main');
   mainPromise.then((res) => {
     // Bootstrap library
-    // eslint-disable-next-line
-    new res.default(config);
+    /* eslint-disable no-new */
+    new res.Main(config);
   });
 }
+
+export { Config } from './src/config';
+export { Main as NgxUnusedCSS } from './src/main';
