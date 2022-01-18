@@ -1,14 +1,18 @@
+import { FileImporter, Importer } from 'sass';
+
 export interface Ignore {
   file: string;
   all?: boolean;
   selectors?: string[];
 }
 
+export type SupportedStyleExtensions = 'scss' | 'sass' | 'css';
+
 export interface Config {
   path: string;
-  styleExt?: 'scss | sass | css';
+  styleExt?: SupportedStyleExtensions;
   ignore: (string | Ignore)[];
-  importer?: string;
-  includePaths?: string;
+  importer?: Importer<'sync'> | FileImporter<'sync'>;
+  includePaths?: string[];
   globalStyles?: string;
 }

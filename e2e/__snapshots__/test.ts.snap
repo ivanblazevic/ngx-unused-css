@@ -3,11 +3,13 @@
 exports[`e2e should throw error with the list of unused css classes 1`] = `
 "Unused CSS classes were found for the following files:
 
-e2e/src/app/app.component.html
-e2e/src/app/app.component.scss
-╔═════════╗
-║ .unused ║
-╚═════════╝
+src/app/app.component.html
+src/app/app.component.scss
+╔══════════════════════════╗
+║ .test-lib-class          ║
+║ .test-css-lib-load-paths ║
+║ .unused                  ║
+╚══════════════════════════╝
 ***** GLOBAL UNUSED CSS *****
 ***** GLOBAL UNUSED CSS *****
 ╔════════════════════╗

@@ -1,27 +1,25 @@
-import path from 'path'
-import getConfig from '../../index'
-import { Ignore } from '../config'
-import { SELECTORS_TO_IGNORE } from '../constants'
-import { handler } from './whitelist/handler'
+import path from 'path';
+import { Ignore } from '../config';
+import { SELECTORS_TO_IGNORE } from '../constants';
+import { handler } from './whitelist/handler';
 
-const conf = getConfig();
+export default function whitelist(
+  classes: string[],
+  cssPath: string,
+  ignore: (string | Ignore)[],
+  projectPath: string
+) {
+  const fileToIgnore = (cssPath: string) => {
+    const ignoreList = ignore.filter((c) => typeof c === 'object') as Ignore[];
+    return ignoreList.find((c) => path.join(projectPath, c.file) === cssPath);
+  };
 
-const projectPath = conf.path
+  const ignoreFileMatched = fileToIgnore(cssPath);
 
-const fileToIgnore = (cssPath: string) => {
-  return conf.ignore
-    .filter((c) => typeof c === 'object')
-    .find((c: Ignore) => path.join(projectPath, c.file) === cssPath) as Ignore
+  const ignoreSelectors = SELECTORS_TO_IGNORE.concat(
+    // @ts-ignore
+    ignore && ignore.filter((c) => typeof c === 'string')
+  );
+
+  return handler(classes, ignoreFileMatched, ignoreSelectors);
 }
-
-const ignoreSelectors = SELECTORS_TO_IGNORE.concat(
-  // @ts-ignore
-  conf && conf.ignore && conf.ignore.filter((c) => typeof c === 'string')
-)
-
-function whitelist (classes: string[], cssPath: string) {
-  const ignoreFileMatched = fileToIgnore(cssPath)
-  return handler(classes, ignoreFileMatched, ignoreSelectors)
-}
-
-export default whitelist

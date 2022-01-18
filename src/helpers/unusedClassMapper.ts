@@ -1,5 +1,9 @@
 import fs from 'fs';
+import { Config } from '../config';
 import findUnusedCss from '../main/findUnusedCss';
+
+type UnusedClasses = string[]; // Return class names as array of strings
+export type UnusedClassesMap = [UnusedClasses, string]; // Second string is actual html file where unused classes were found
 
 /**
  * Returns array of classes/attributes not used in html
@@ -9,25 +13,21 @@ import findUnusedCss from '../main/findUnusedCss';
  * @param htmlPath - html file path
  * @returns Promise<([string[], string])>
  */
-async function unusedClassMapper (
+export default async function unusedClassMapper(
   cssPath: string,
   htmlContent: string,
-  htmlPath: string
-): Promise<([string[], string])> {
+  htmlPath: string,
+  config: Config
+): Promise<UnusedClassesMap> {
   try {
     // Try to read styling file path in order to determine if file exist
     fs.readFileSync(cssPath);
-    try {
-      const classes = await findUnusedCss(htmlContent, cssPath);
-      return [classes, htmlPath];
-    } catch (error) {
-      console.log(error);
-    }
   } catch (error) {
-    console.log(
+    throw new Error(
       'Styling file for component ' + htmlPath + ' not found, skipping...'
     );
   }
-}
 
-export default unusedClassMapper;
+  const classes = await findUnusedCss(htmlContent, cssPath, config);
+  return [classes, htmlPath];
+}

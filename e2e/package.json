@@ -6,7 +6,7 @@
   "dependencies": {},
   "devDependencies": {},
   "scripts": {
-    "test": "node ../dist/index.js --config ../e2e/.ngx-unused-css.manual.json"
+    "test": "node ../dist/index.js --config ../e2e/.ngx-unused-css.json"
   },
   "author": "",
   "license": "ISC"

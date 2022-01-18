@@ -1,16 +1,14 @@
 #! /usr/bin/env node
-/* eslint-disable no-tabs */
 
 /*
 Find unused css inside Angular components
 */
-// import Main from "./src/main";
+import fs from 'fs';
+import meow from 'meow';
+import path from 'path';
 import { Config } from './src/config';
 import init from './src/init';
 
-const path = require('path');
-const fs = require('fs');
-const meow = require('meow');
 const defaultConfigPath = '.ngx-unused-css.json';
 
 const cli = meow(
@@ -36,14 +34,6 @@ const cli = meow(
 
 let config: Config;
 
-// Use dynamic import so config is initialized on every import
-async function start() {
-  const mainPromise = import('./src/main');
-  mainPromise.then((res) => {
-    new res.default();
-  });
-}
-
 if (cli.flags.init) {
   init();
 } else {
@@ -51,17 +41,17 @@ if (cli.flags.init) {
     config = require(path.join(__dirname, cli.flags.config));
   } else if (fs.existsSync(path.resolve(defaultConfigPath))) {
     config = require(path.resolve(defaultConfigPath));
-  }
-
-  if (!config) {
+  } else {
     throw new Error(
       'Config not found, did you forgot to run ngx-unused-css --init?'
     );
   }
 
-  start();
-}
-
-export default function getConfig(): Config {
-  return config;
+  // Use dynamic import so config is initialized on every import
+  const mainPromise = import('./src/main');
+  mainPromise.then((res) => {
+    // Bootstrap library
+    // eslint-disable-next-line
+    new res.default(config);
+  });
 }

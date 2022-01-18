@@ -1,43 +1,36 @@
-import PurgeCSS from 'purgecss'
-import compileSCSS from './compileSCSS'
-import parseNgClass from '../helpers/parseNgClass'
-import whitelist from '../helpers/whitelist'
+import PurgeCSS from 'purgecss';
+import { Config } from '../config';
+import parseNgClass from '../helpers/parseNgClass';
+import whitelist from '../helpers/whitelist';
+import compileSCSS from './compileSCSS';
 
 /**
  * Find unused css classes per file and returns array of them
  * @param {string} content
  * @param {string} cssPath
  */
-async function findUnusedCss (content: string, cssPath: string) {
-  let css = ''
-  try {
-    if (!cssPath) return
-    css = compileSCSS(cssPath)
-  } catch (error) {
-    console.error(error)
-  }
+export default async function findUnusedCss(
+  content: string,
+  cssPath: string,
+  config: Config
+) {
+  const css = compileSCSS(cssPath, config);
 
-  try {
-    const html = parseNgClass(content, cssPath)
+  const html = parseNgClass(content, cssPath);
 
-    const options = {
-      content: [
-        {
-          raw: html,
-          extension: 'html'
-        }
-      ],
-      css: [{ raw: css }],
-      rejected: true
-    }
+  const options = {
+    content: [
+      {
+        raw: html,
+        extension: 'html'
+      }
+    ],
+    css: [{ raw: css }],
+    rejected: true
+  };
 
-    const purgecssResult = await new PurgeCSS().purge(options)
-    const result = purgecssResult[0].rejected
+  const purgecssResult = await new PurgeCSS().purge(options);
+  const result = purgecssResult[0].rejected || [];
 
-    return whitelist(result, cssPath)
-  } catch (error) {
-    console.error(error)
-  }
+  return whitelist(result, cssPath, config.ignore, config.path);
 }
-
-export default findUnusedCss

@@ -1,30 +1,35 @@
-import path from 'path'
-import sass from 'sass'
-import getConfig from '../../index'
+import path from 'path';
+import sass from 'sass';
+import { pathToFileURL } from 'url';
+import { Config } from '../config';
 
 /**
- * Resolve tilda relative importes from node_modules
- * @param {*} url
- */
-function importer (url: string) {
-  if (url[0] === '~') {
-    url = path.resolve('node_modules', url.substr(1))
-  }
-  return { file: url }
-}
-
-/**
- * Compile SCSS
+ * Compile styling file
  * @param {string} cssPath
  */
-function compileSCSS (cssPath) {
-  const conf = getConfig();
-  const result = sass.renderSync({
-    file: cssPath,
-    importer: [importer, conf.importer],
-    includePaths: conf.includePaths
-  })
-  return result.css.toString()
-}
+export default function compileSCSS(cssPath: string, config: Config): string {
+  const options: sass.Options<'sync'> = {
+    importers: [
+      {
+        // An importer that redirects relative URLs starting with "~" to
+        // `node_modules`.
+        findFileUrl(url: string) {
+          if (!url.startsWith('~')) return null;
+          return new URL(
+            path.join('node_modules', url.substring(1)),
+            pathToFileURL('node_modules')
+          );
+        }
+      }
+    ],
+    loadPaths: config.includePaths
+  };
 
-export default compileSCSS
+  if (config.importer) {
+    options.importers?.push(config.importer);
+  }
+
+  const result = sass.compile(cssPath, options);
+
+  return result.css.toString();
+}
