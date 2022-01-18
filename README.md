@@ -18,7 +18,7 @@ Run via API
 ```
 import { NgxUnusedCSS } from 'ngx-unused-css';
 
-const result = new Main(config).instance.run();
+const result = new NgxUnusedCSS(config).instance.run();
 ```
 
 Run via CLI
