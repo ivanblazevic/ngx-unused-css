@@ -3,7 +3,7 @@
  * e.g. if param is ["a", "b"] it will return [["a"], ["b"], ["a", "b"]]
  * @param { Array<string> } a - Array of strings
  */
-export default function combine(a: string[]) {
+export default function combine(a: string[]): string[][] {
   const fn = function (n, src, got, all) {
     if (n === 0) {
       if (got.length > 0) {
