@@ -5,10 +5,11 @@ exports[`e2e should throw error with the list of unused css classes 1`] = `
 
 src/app/app.component.html
 src/app/app.component.scss
-╔═════════════════╗
-║ .test-lib-class ║
-║ .unused         ║
-╚═════════════════╝
+╔══════════════════════════╗
+║ .test-lib-class          ║
+║ .test-css-lib-load-paths ║
+║ .unused                  ║
+╚══════════════════════════╝
 ***** GLOBAL UNUSED CSS *****
 ***** GLOBAL UNUSED CSS *****
 ╔════════════════════╗
