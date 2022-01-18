@@ -1,6 +1,6 @@
 import { exec, execSync } from 'child_process';
 import { Config } from '../src/config';
-import Main from './../src/main';
+import { Main } from './../src/main';
 
 describe('e2e', () => {
   it('should test CLI', (done) => {
