@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "dev": "tsc -w",
-    "build": "rm -R dist && tsc",
+    "build": "tsc",
     "lint": "eslint --ext .ts src/**",
     "lint:fix": "eslint --fix --ext .ts src/**",
     "test": "jest src/** --runInBand",

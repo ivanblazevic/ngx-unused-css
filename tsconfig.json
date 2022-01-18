@@ -16,5 +16,5 @@
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2018", "dom"]
   },
-  "exclude": ["./e2e", "./node_modules", "**/*.test.ts"]
+  "exclude": ["./e2e", "./node_modules", "**/*.test.ts", "./dist"]
 }
