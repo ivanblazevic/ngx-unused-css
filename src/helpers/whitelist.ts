@@ -10,11 +10,8 @@ export default function whitelist(
   projectPath: string
 ) {
   const fileToIgnore = (cssPath: string) => {
-    return ignore
-      .filter((c) => typeof c === 'object')
-      .find(
-        (c: Ignore) => path.join(projectPath, c.file) === cssPath
-      ) as Ignore;
+    const ignoreList = ignore.filter((c) => typeof c === 'object') as Ignore[];
+    return ignoreList.find((c) => path.join(projectPath, c.file) === cssPath);
   };
 
   const ignoreFileMatched = fileToIgnore(cssPath);

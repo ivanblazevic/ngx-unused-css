@@ -14,11 +14,7 @@ export default async function findUnusedCss(
   cssPath: string,
   config: Config
 ) {
-  let css = '';
-
-  if (!cssPath) return;
-
-  css = compileSCSS(cssPath, config);
+  const css = compileSCSS(cssPath, config);
 
   const html = parseNgClass(content, cssPath);
 
@@ -34,7 +30,7 @@ export default async function findUnusedCss(
   };
 
   const purgecssResult = await new PurgeCSS().purge(options);
-  const result = purgecssResult[0].rejected;
+  const result = purgecssResult[0].rejected || [];
 
   return whitelist(result, cssPath, config.ignore, config.path);
 }

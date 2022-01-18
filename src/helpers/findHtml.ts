@@ -14,7 +14,7 @@ import path from 'path';
  */
 export default function findHtml(
   base: string,
-  ext?: string,
+  ext = 'html',
   files?: string[],
   result?: string[]
 ): string[] {
@@ -23,7 +23,6 @@ export default function findHtml(
   }
   files = files || fs.readdirSync(base);
   result = result || [];
-  ext = 'html';
 
   files.forEach((file) => {
     const newbase = path.join(base, file);
@@ -31,7 +30,7 @@ export default function findHtml(
       result = findHtml(newbase, 'html', fs.readdirSync(newbase), result);
     } else {
       if (file.substr(-1 * (ext.length + 1)) === '.' + ext) {
-        result.push(newbase);
+        result?.push(newbase);
       }
     }
   });

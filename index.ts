@@ -41,9 +41,7 @@ if (cli.flags.init) {
     config = require(path.join(__dirname, cli.flags.config));
   } else if (fs.existsSync(path.resolve(defaultConfigPath))) {
     config = require(path.resolve(defaultConfigPath));
-  }
-
-  if (!config) {
+  } else {
     throw new Error(
       'Config not found, did you forgot to run ngx-unused-css --init?'
     );
@@ -53,6 +51,7 @@ if (cli.flags.init) {
   const mainPromise = import('./src/main');
   mainPromise.then((res) => {
     // Bootstrap library
+    // eslint-disable-next-line
     new res.default(config);
   });
 }

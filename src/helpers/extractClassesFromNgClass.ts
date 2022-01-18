@@ -11,7 +11,7 @@ export default function extractClassesFromNgClass(value: string) {
     found.push(curMatch[1].replace(/\n/g, '').replace(/ /g, ''));
   }
 
-  let classes = [];
+  let classes: string[] = [];
   if (found.length > 0) {
     classes = found[0].split(',').map((e) => e.split(':')[0]);
   }

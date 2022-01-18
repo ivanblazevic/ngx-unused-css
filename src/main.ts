@@ -40,14 +40,19 @@ export default class Main {
   }> {
     try {
       const unusedClasses = new UnusedClasses(this.config);
+
       const css = await unusedClasses.getUnusedClasses(this.config.path);
-      const globalCss = await unusedClasses.getGlobalUnusedClasses(
-        this.config.globalStyles
-      );
+
+      const globalCss =
+        (this.config.globalStyles &&
+          (await unusedClasses.getGlobalUnusedClasses(
+            this.config.globalStyles
+          ))) ||
+        [];
 
       return { css, globalCss };
-    } catch (error) {
-      throw new Error(error);
+    } catch (e) {
+      throw new Error(e as string);
     }
   }
 

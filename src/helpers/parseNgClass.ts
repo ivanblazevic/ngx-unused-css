@@ -8,9 +8,17 @@ import extractClassesFromNgClass from './extractClassesFromNgClass';
  * @param { element } e
  * @param { Array<string> } classes
  */
-function createCopyOfElementWithClasses(dom, e, classes) {
+function createCopyOfElementWithClasses(
+  dom: JSDOM,
+  e: Element,
+  classes: string[]
+) {
   const el = dom.window.document.createElement(e.tagName);
-  el.classList = e.classList;
+
+  e.classList.forEach((c) => {
+    el.classList.add(c);
+  });
+
   classes.forEach((c) => el.classList.add(c));
   return el;
 }

@@ -3,7 +3,7 @@ import fs from 'fs';
 import prompts from 'prompts';
 import { Config } from './config';
 
-const questions = [
+const questions: prompts.PromptObject<string>[] = [
   {
     type: 'confirm',
     name: 'isDefaultSrc',
@@ -32,7 +32,7 @@ const questions = [
   }
 ];
 
-export default async function init () {
+export default async function init() {
   const result = await prompts(questions);
 
   const feedback = [];
@@ -43,15 +43,19 @@ export default async function init () {
   };
 
   if (result.isDefaultSrc) {
-    config.path = 'src/app'
+    config.path = 'src/app';
   } else {
-    feedback.push('App is not located in the src/app, pls provide correct path in the config')
+    feedback.push(
+      'App is not located in the src/app, pls provide correct path in the config'
+    );
   }
 
   if (result.isDefaultGlobalStylingSrc) {
-    config.globalStyles = 'src/styles.scss'
+    config.globalStyles = 'src/styles.scss';
   } else {
-    feedback.push('Looks like configuration for global styling is missing, pls provide correct globalStyles in the config if there is any')
+    feedback.push(
+      'Looks like configuration for global styling is missing, pls provide correct globalStyles in the config if there is any'
+    );
   }
 
   if (result.hasMaterialLib) {
@@ -61,11 +65,15 @@ export default async function init () {
   config.styleExt = result.styleExt;
 
   if (feedback.length > 0) {
-    console.log(chalk.red.bold('INFO: Following changes in the .ngx-unused-css.json are required:\n'))
+    console.log(
+      chalk.red.bold(
+        'INFO: Following changes in the .ngx-unused-css.json are required:\n'
+      )
+    );
 
     feedback.forEach((f, idx) => {
-      console.log(chalk.red.bold(`${idx + 1}. ${f}`))
-    })
+      console.log(chalk.red.bold(`${idx + 1}. ${f}`));
+    });
   }
 
   fs.writeFileSync('.ngx-unused-css.json', JSON.stringify(config, null, 2));
