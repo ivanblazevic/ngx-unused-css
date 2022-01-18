@@ -1,11 +1,12 @@
 import chalk from 'chalk';
+import path from 'path';
 import { table } from 'table';
 import { Config } from './config';
 import { DEFAULT_STYLE_EXTENSION } from './constants';
 import { UnusedClassesMap } from './helpers/unusedClassMapper';
 import UnusedClasses from './main/getUnusedClasses';
 
-export default class Main {
+export class Main {
   private config: Config;
 
   constructor(config: Config) {
@@ -15,26 +16,29 @@ export default class Main {
       config.styleExt = DEFAULT_STYLE_EXTENSION;
     }
 
-    this.run()
-      .then((r) => {
-        const res = r.css;
+    // Execute run immediately if running via CLI
+    if (this.config.cli) {
+      this.run()
+        .then((r) => {
+          const res = r.css;
 
-        if (r.globalCss.length > 0) {
-          res.push([r.globalCss, '***** GLOBAL UNUSED CSS *****']);
-        }
+          if (r.globalCss.length > 0) {
+            res.push([r.globalCss, '***** GLOBAL UNUSED CSS *****']);
+          }
 
-        if (res.length > 0) {
-          this.log(res);
-        } else {
-          console.log('No duplicate classes were found!');
-        }
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+          if (res.length > 0) {
+            this.log(res);
+          } else {
+            console.log('No duplicate classes were found!');
+          }
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
+    }
   }
 
-  private async run(): Promise<{
+  public async run(): Promise<{
     css: UnusedClassesMap[];
     globalCss: string[];
   }> {
@@ -52,6 +56,7 @@ export default class Main {
 
       return { css, globalCss };
     } catch (e) {
+      console.log('e', e, path.resolve(''));
       throw new Error(e as string);
     }
   }

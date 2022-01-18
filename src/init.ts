@@ -39,7 +39,8 @@ export default async function init() {
 
   const config: Config = {
     path: '',
-    ignore: []
+    ignore: [],
+    cli: true
   };
 
   if (result.isDefaultSrc) {
