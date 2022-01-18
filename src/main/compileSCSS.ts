@@ -3,9 +3,6 @@ import sass from 'sass';
 import { pathToFileURL } from 'url';
 import { Config } from '../config';
 
-// TODO: return feature back
-// conf.importer
-
 /**
  * Compile SCSS
  * @param {string} cssPath
@@ -23,7 +20,8 @@ export default function compileSCSS(cssPath: string, config: Config): string {
             pathToFileURL('node_modules')
           );
         }
-      }
+      },
+      config.importer
     ],
     loadPaths: config.includePaths
   });

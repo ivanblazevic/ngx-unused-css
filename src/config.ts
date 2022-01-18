@@ -12,7 +12,7 @@ export interface Config {
   path: string;
   styleExt?: SupportedStyleExtensions;
   ignore: (string | Ignore)[];
-  importer?: (Importer<'sync'> | FileImporter<'sync'>)[];
+  importer?: Importer<'sync'> | FileImporter<'sync'>;
   includePaths?: string[];
   globalStyles?: string;
 }
