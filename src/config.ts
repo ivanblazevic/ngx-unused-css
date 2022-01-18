@@ -15,4 +15,5 @@ export interface Config {
   importer?: Importer<'sync'> | FileImporter<'sync'>;
   includePaths?: string[];
   globalStyles?: string;
+  cli: boolean; // Determine if running via CLI or by using programmic API
 }

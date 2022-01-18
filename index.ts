@@ -47,6 +47,8 @@ if (cli.flags.init) {
     );
   }
 
+  config.cli = true;
+
   // Use dynamic import so config is initialized on every import
   const mainPromise = import('./src/main');
   mainPromise.then((res) => {

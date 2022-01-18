@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`e2e should throw error with the list of unused css classes 1`] = `
+exports[`e2e should test CLI 1`] = `
 "Unused CSS classes were found for the following files:
 
 src/app/app.component.html
