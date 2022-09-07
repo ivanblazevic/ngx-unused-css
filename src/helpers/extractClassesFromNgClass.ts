@@ -8,7 +8,7 @@ export default function extractClassesFromNgClass(value: string) {
   let curMatch;
 
   while ((curMatch = rxp.exec(value))) {
-    found.push(curMatch[1].replace(/\n/g, '').replace(/ /g, ''));
+    found.push(curMatch[1].replace(/[\n|\r|\t]/g, '').replace(/ /g, ''));
   }
 
   let classes: string[] = [];
