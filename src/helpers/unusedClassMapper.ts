@@ -23,9 +23,10 @@ export default async function unusedClassMapper(
     // Try to read styling file path in order to determine if file exist
     fs.readFileSync(cssPath);
   } catch (error) {
-    throw new Error(
+    console.log(
       'Styling file for component ' + htmlPath + ' not found, skipping...'
     );
+    return [[], htmlPath];
   }
 
   const classes = await findUnusedCss(htmlContent, cssPath, config);
